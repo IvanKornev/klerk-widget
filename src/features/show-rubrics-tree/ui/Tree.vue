@@ -43,11 +43,12 @@
           <RubricRow
             class="item__row"
             :rubric="rubric"
+            :opened-rubrics-ids="openedRubricsIds"
             @checkbox-click="handleRubric(rubric)"
-            @arrow-click="toggleRubricVisibility(rubric)"
+            @arrow-click="toggleRubricVisibility"
             :active="rubricWasAdded(rubric)"
-            :is-open="openedRubricId === rubric.id"
-            :with-arrow="rubric.children.length > 0"
+            :is-open="openedRubricsIds.includes(rubric.id)"
+            :with-arrow="rubric?.children?.length > 0"
             with-count-sum
           />
         </div>

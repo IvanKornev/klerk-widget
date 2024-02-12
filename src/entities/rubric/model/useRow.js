@@ -27,13 +27,6 @@ const useRow = {
       return results;
     },
   },
-  methods: {
-    handleClick(type = 'arrow') {
-      if (!this.disabled) {
-        this.$emit(`${type}-click`);
-      }
-    },
-  },
 };
 
 export default useRow;

@@ -7,7 +7,7 @@
           class="mt-2"
           density="compacy"
           hide-details
-          @click="handleClick('checkbox')"
+          @click="$emit('checkbox-click', rubric)"
         >
           <template #label>
             <p class="cell__text">
@@ -24,21 +24,24 @@
       </div>
       <div
         v-if="withArrow"
-        @click="handleClick('arrow')"
+        @click="$emit('arrow-click', rubric)"
         class="row__icon_arrow"
       >
         <v-icon icon="keyboard_arrow_down" />
       </div>
     </div>
     <div
-      v-if="rubric.children && rubric.children.length > 0"
+      v-if="rubric.children && rubric.children.length > 0 && openedRubricsIds.includes(rubric.id)"
       class="row__list_children"
     >
       <RubricRow
         v-for="subrubric in rubric.children"
+        :opened-rubrics-ids="openedRubricsIds"
         :key="subrubric.id"
         :rubric="subrubric"
-        :with-arrow="subrubric?.children?.length > 0"
+        :with-arrow="subrubric.children && subrubric.children.length > 0"
+        :is-open="openedRubricsIds.includes(subrubric.id)"
+        @click="$emit('arrow-click', subrubric)"
       />
     </div>
   </Fragment>
@@ -51,6 +54,12 @@ export default {
   emits: ['arrow-click', 'checkbox-click'],
   mixins: [useRow],
   props: {
+    openedRubricsIds: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
     rubric: {
       type: Object,
       default() {
