@@ -36,16 +36,17 @@
     >
       <RubricRow
         v-for="subrubric in rubric.children"
+        :key="subrubric.id"
         :opened-rubrics-ids="openedRubricsIds"
         :checked-rubrics="checkedRubrics"
-        :key="subrubric.id"
         :rubric="subrubric"
-        :with-arrow="subrubric.children && subrubric.children.length > 0"
+        :with-arrow="hasChildren(subrubric)"
+        :with-count-sum="hasChildren(subrubric)"
         :is-open="openedRubricsIds.includes(subrubric.id)"
         :active="subrubricWasAdded(rubric, subrubric)"
+        @checked-rubrics-change="emitCheckedRubricsChanges"
         @arrow-click="$emit('arrow-click', subrubric)"
         @checkbox-click="handleSubrubric(rubric, subrubric)"
-        @checked-rubrics-change="(...args) => $emit('checked-rubrics-change', ...args)"
       />
     </div>
   </Fragment>

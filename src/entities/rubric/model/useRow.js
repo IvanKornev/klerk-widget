@@ -27,6 +27,14 @@ const useRow = {
       return results;
     },
   },
+  methods: {
+    emitCheckedRubricsChanges(...args) {
+      this.$emit('checked-rubrics-change', ...args);
+    },
+    hasChildren(subrubric) {
+      return subrubric.children && subrubric.children.length > 0;
+    },
+  },
 };
 
 export default useRow;

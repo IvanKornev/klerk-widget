@@ -47,7 +47,7 @@
             :opened-rubrics-ids="openedRubricsIds"
             @checkbox-click="handleRubric(rubric)"
             @arrow-click="toggleRubricVisibility"
-            @checked-rubrics-change="emitCheckedRubricsChanged"
+            @checked-rubrics-change="emitCheckedRubricsChanges"
             :active="rubricWasAdded(rubric)"
             :is-open="openedRubricsIds.includes(rubric.id)"
             :with-arrow="rubric?.children?.length > 0"
@@ -99,7 +99,7 @@ export default {
     },
   },
   methods: {
-    emitCheckedRubricsChanged(...args) {
+    emitCheckedRubricsChanges(...args) {
       this.$emit('checked-rubrics-change', ...args);
     },
   },
