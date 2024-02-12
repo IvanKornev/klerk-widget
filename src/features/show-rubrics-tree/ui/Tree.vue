@@ -117,6 +117,6 @@ export default {
   }
 }
 .header__icon_arrow {
-  transition: transform 0.3s;
+  transition: transform 0.2s;
 }
 </style>
