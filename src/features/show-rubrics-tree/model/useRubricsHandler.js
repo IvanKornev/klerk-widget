@@ -1,31 +1,40 @@
 const useRubricsHandler = {
   computed: {
-    subrubricsIds() {
+    subrubricsHashMap() {
       const results = {};
       this.list.forEach((rubric) => {
-        results[rubric.id] = rubric.children.map(({ id }) => id);
+        results[rubric.id] = {
+          ids: [],
+          counts: {},
+        };
+        rubric.children.map(({ id, count }) => {
+          results[rubric.id].ids.push(id);
+          results[rubric.id].counts[id] = count;
+        });
       });
       return results;
     },
   },
   methods: {
     handleRubric(rubric) {
+      let actionName = 'rubric-adding';
       if (this.rubricWasAdded(rubric)) {
-        this.$emit('checked-rubrics-change', rubric.id, 'rubric-removing');
-        return;
+        actionName = 'rubric-removing';
       }
       const payload = {
         rubricId: rubric.id,
-        subrubricsIds: this.subrubricsIds[rubric.id],
+        subrubrics: this.subrubricsHashMap[rubric.id],
       };
-      this.$emit('checked-rubrics-change', payload, 'rubric-adding');
+      this.$emit('checked-rubrics-change', payload, actionName);
     },
     rubricWasAdded(rubric) {
-      const addedRubric = this.checkedRubrics[rubric.id];
+      const { id } = rubric;
+      const addedRubric = this.checkedRubrics[id];
       if (!addedRubric) {
         return false;
       }
-      return this.subrubricsIds[rubric.id].length === addedRubric.length;
+      const subrubcricsLength = this.subrubricsHashMap[id].ids.length;
+      return subrubcricsLength === addedRubric.length;
     },
   },
 };

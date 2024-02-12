@@ -10,14 +10,21 @@
         <template #label>
           <p class="cell__text">
             {{ cellText }}
-            <a :href="link" target="_blank">
+            <a
+              :href="link"
+              target="_blank"
+            >
               <v-icon icon="link" />
             </a>
           </p>
         </template>
       </v-checkbox>
     </div>
-    <div v-if="withArrow" @click="handleClick('arrow')" class="row__icon_arrow">
+    <div
+      v-if="withArrow"
+      @click="handleClick('arrow')"
+      class="row__icon_arrow"
+    >
       <v-icon icon="keyboard_arrow_down" />
     </div>
   </div>

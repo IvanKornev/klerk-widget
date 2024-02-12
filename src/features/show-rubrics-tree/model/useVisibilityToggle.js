@@ -1,7 +1,7 @@
 const useVisibilityToggle = {
   data() {
     return {
-      treeIsOpen: false,
+      treeIsOpen: true,
       openedRubricId: null,
     };
   },

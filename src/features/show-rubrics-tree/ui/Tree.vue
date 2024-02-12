@@ -1,5 +1,5 @@
 <template>
-  <section :class="rootCss">
+  <div :class="rootCss">
     <div
       class="tree__header"
       @click="toggleTreeVisibility"
@@ -11,40 +11,49 @@
         <v-icon icon="keyboard_arrow_down" />
       </div>
     </div>
-    <div
-      v-if="treeIsOpen && list.length > 0"
-      class="tree__list"
-    >
+    <div v-if="treeIsOpen" class="tree__list">
       <div class="list__panel">
         <v-checkbox
           label="Отображать пустые рубрики"
           :model-value="withEmptyRubrics"
-          @click="$emit('toggle-empty-rubrics')"
+          @click="$emit('empty-rubrics-toggle')"
           hide-details
         />
       </div>
-      <div v-for="rubric in list" :key="rubric.id" class="list__item">
-        <RubricRow
-          :rubric="rubric"
-          @checkbox-click="handleRubric(rubric)"
-          @arrow-click="toggleRubricVisibility(rubric)"
-          :disabled="rubric.children.length < 1"
-          :active="rubricWasAdded(rubric)"
-          with-count-sum
-          with-arrow
+      <div v-if="isLoading" class="list__preloader">
+        <v-progress-circular
+          size="50"
+          width="8"
+          indeterminate
         />
-        <div v-if="openedRubricId === rubric.id">
-          <RubricRow
-            v-for="subrubric in rubric.children"
-            :key="subrubric.id"
-            :rubric="subrubric"
-            @checkbox-click="handleSubrubric(rubric, subrubric)"
-            :active="subrubricWasAdded(rubric, subrubric)"
-          />
-        </div>
       </div>
+      <Fragment v-else>
+        <div
+          v-for="rubric in list"
+          :key="rubric.id"
+          class="list__item"
+        >
+          <RubricRow
+            :rubric="rubric"
+            @checkbox-click="handleRubric(rubric)"
+            @arrow-click="toggleRubricVisibility(rubric)"
+            :active="rubricWasAdded(rubric)"
+            :with-arrow="rubric.children.length > 0"
+            with-count-sum
+          />
+          <div v-if="openedRubricId === rubric.id">
+            <RubricRow
+              v-for="subrubric in rubric.children"
+              :key="subrubric.id"
+              :rubric="subrubric"
+              @checkbox-click="handleSubrubric(rubric, subrubric)"
+              :active="subrubricWasAdded(rubric, subrubric)"
+            />
+          </div>
+        </div>
+      </Fragment>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -55,7 +64,7 @@ import {
   useRubricsHandler,
 } from '@/features/show-rubrics-tree/model';
 export default {
-  emits: ['toggle-empty-rubrics', 'checked-rubrics-change'],
+  emits: ['empty-rubrics-toggle', 'checked-rubrics-change'],
   components: {
     RubricRow,
   },
@@ -73,9 +82,9 @@ export default {
         return {};
       },
     },
-    disabled: {
+    isLoading: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     withEmptyRubrics: {
       type: Boolean,
@@ -85,7 +94,7 @@ export default {
   computed: {
     rootCss() {
       return ['tree', {
-        'tree_disabled': this.disabled,
+        'tree_is-loading': this.isLoading,
         'tree_is-open': this.treeIsOpen,
       }];
     },
@@ -95,13 +104,11 @@ export default {
 
 <style lang="scss" scoped>
 .tree {
-  margin: 0 auto;
-  max-width: 600px;
   transition: opacity 0.3s;
   &_is-open .header__icon_arrow {
     transform: rotate(180deg);
   }
-  &_disabled {
+  &_is-loading {
     opacity: 0.5;
     pointer-events: none;
   }
@@ -117,9 +124,17 @@ export default {
   &__list {
     max-height: 350px;
     overflow-y: auto;
+    margin-top: 16px;
+    padding-right: 16px;
   }
 }
+.list__preloader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 280px;
+}
 .header__icon_arrow {
-  transition: transform 0.3s;
+  transition: transform 0.2s;
 }
 </style>
