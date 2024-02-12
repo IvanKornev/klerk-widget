@@ -1,8 +1,8 @@
 import { createApp } from 'vue';
 import { vuetify, api } from '@/app/plugins';
-import MainPage from '@/pages/index';
+import { RubricsPanel } from '@/widgets/rubrics';
 
-createApp(MainPage)
+createApp(RubricsPanel)
   .use(vuetify)
   .use(api)
   .mount('#app');

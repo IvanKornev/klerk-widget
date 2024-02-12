@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { RubricsTree } from '@/widgets/rubrics-tree';
+import { RubricsTree } from '@/features/show-rubrics-tree';
 export default {
   components: {
     RubricsTree,
@@ -70,3 +70,4 @@ export default {
   },
 };
 </script>
+@/features/rubrics-tree
