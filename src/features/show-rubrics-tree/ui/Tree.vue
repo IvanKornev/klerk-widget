@@ -37,6 +37,7 @@
             :key="subrubric.id"
             :rubric="subrubric"
             @checkbox-click="handleSubrubric(rubric, subrubric)"
+            :active="subrubricWasAdded(rubric, subrubric)"
           />
         </div>
       </div>

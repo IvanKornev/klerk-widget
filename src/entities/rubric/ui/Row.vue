@@ -1,7 +1,12 @@
 <template>
   <div :class="rootCss">
     <div class="row__cell">
-      <v-checkbox class="pa-0 ma-0" hide-details @click="handleClick('checkbox')">
+      <v-checkbox
+        :model-value="active"
+        class="pa-0 ma-0"
+        hide-details
+        @click="handleClick('checkbox')"
+      >
         <template #label>
           <p class="cell__text">
             {{ cellText }}
@@ -42,6 +47,10 @@ export default {
       default: false,
     },
     disabled: {
+      type: Boolean,
+      default: false,
+    },
+    active: {
       type: Boolean,
       default: false,
     },
