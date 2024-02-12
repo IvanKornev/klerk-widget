@@ -1,5 +1,5 @@
 <template>
-  <section :class="rootCss">
+  <div :class="rootCss">
     <div
       class="tree__header"
       @click="toggleTreeVisibility"
@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -95,8 +95,6 @@ export default {
 
 <style lang="scss" scoped>
 .tree {
-  margin: 0 auto;
-  max-width: 600px;
   transition: opacity 0.3s;
   &_is-open .header__icon_arrow {
     transform: rotate(180deg);
