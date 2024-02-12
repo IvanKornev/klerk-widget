@@ -3,7 +3,7 @@
     <div class="row__cell">
       <checkbox />
       <p class="cell__text">
-        {{ rubric.title }}
+        {{ cellText }}
         <a :href="link" target="_blank">
           <v-icon icon="link" />
         </a>
@@ -34,12 +34,24 @@ export default {
       type: Boolean,
       default: false,
     },
+    withCounter: {
+      type: Boolean,
+      default: false,
+    },
     disabled: {
       type: Boolean,
       default: false,
     },
   },
   computed: {
+    cellText() {
+      const { title, count } = this.rubric;
+      let text = title;
+      if (this.withCounter) {
+        text = `${text} (кол-во: ${count})`;
+      }
+      return text;
+    },
     rootCss() {
       return ['row', {
         'row_disabled': this.disabled,
