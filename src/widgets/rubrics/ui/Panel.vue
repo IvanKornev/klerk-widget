@@ -39,6 +39,7 @@ export default {
 
 <style lang="scss" scoped>
 .page {
+  padding: 0 8vw;
   margin-top: 64px;
   display: flex;
   align-items: center;

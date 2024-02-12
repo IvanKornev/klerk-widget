@@ -3,7 +3,8 @@
     <div class="row__cell">
       <v-checkbox
         :model-value="active"
-        class="pa-0 ma-0"
+        class="mt-2"
+        density="compacy"
         hide-details
         @click="handleClick('checkbox')"
       >
@@ -47,15 +48,15 @@ export default {
         };
       },
     },
+    isOpen: {
+      type: Boolean,
+      default: false,
+    },
     withArrow: {
       type: Boolean,
       default: false,
     },
     withCountSum: {
-      type: Boolean,
-      default: false,
-    },
-    disabled: {
       type: Boolean,
       default: false,
     },
@@ -73,9 +74,12 @@ export default {
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  &_disabled .row__icon_arrow {
-    pointer-events: none;
-    opacity: 0.5;
+  &_is-open .row__icon_arrow {
+    transform: rotate(180deg);
+  }
+  &__icon_arrow {
+    cursor: pointer;
+    transition: transform 0.2s;
   }
 }
 </style>
