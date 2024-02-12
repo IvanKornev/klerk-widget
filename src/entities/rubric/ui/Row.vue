@@ -37,7 +37,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    withCounter: {
+    withTotalCount: {
       type: Boolean,
       default: false,
     },
@@ -49,11 +49,19 @@ export default {
   computed: {
     cellText() {
       const { title, count } = this.rubric;
-      let text = title;
-      if (this.withCounter) {
-        text = `${text} (кол-во: ${count})`;
+      let text = `${title} (кол-во: ${count})`;
+      if (this.withTotalCount) {
+        const totalCountLine = `сумма количеств: ${this.totalCount}`;
+        text = `${title} (кол-во: ${count}; ${totalCountLine})`;
       }
       return text;
+    },
+    totalCount() {
+      const subrubricsTotalCount = this.rubric.children.reduce((acc, item) => (
+        acc += item.count
+      ), 0);
+      const results = subrubricsTotalCount + this.rubric.count;
+      return results;
     },
     rootCss() {
       return ['row', {

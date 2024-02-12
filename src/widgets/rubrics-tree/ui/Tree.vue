@@ -28,14 +28,14 @@
           :rubric="rubric"
           @click="toggleRubricVisibility(rubric)"
           :disabled="rubric.children.length < 1"
-          with-counter
+          with-total-count
           with-arrow
         />
         <div v-if="openedRubricId === rubric.id">
           <RubricRow
-            v-for="childRubric in rubric.children"
-            :key="childRubric.id"
-            :rubric="childRubric"
+            v-for="subrubric in rubric.children"
+            :key="subrubric.id"
+            :rubric="subrubric"
           />
         </div>
       </div>
