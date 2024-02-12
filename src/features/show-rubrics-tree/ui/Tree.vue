@@ -7,7 +7,7 @@
       <h3 class="header__subtitle">
         Рубрики
       </h3>
-      <div>
+      <div class="header__icon_arrow">
         <v-icon icon="keyboard_arrow_down" />
       </div>
     </div>
@@ -86,6 +86,7 @@ export default {
     rootCss() {
       return ['tree', {
         'tree_disabled': this.disabled,
+        'tree_is-open': this.treeIsOpen,
       }];
     },
   },
@@ -97,6 +98,9 @@ export default {
   margin: 0 auto;
   max-width: 600px;
   transition: opacity 0.3s;
+  &_is-open .header__icon_arrow {
+    transform: rotate(180deg);
+  }
   &_disabled {
     opacity: 0.5;
     pointer-events: none;
@@ -108,10 +112,14 @@ export default {
     justify-content: space-between;
     padding: 12px 0;
     border-bottom: 1px #000 solid;
+    cursor: pointer;
   }
   &__list {
     max-height: 350px;
     overflow-y: auto;
   }
+}
+.header__icon_arrow {
+  transition: transform 0.3s;
 }
 </style>

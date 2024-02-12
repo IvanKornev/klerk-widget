@@ -1,5 +1,10 @@
 const useRubric = {
   computed: {
+    rootCss() {
+      return ['row', {
+        'row_disabled': this.disabled,
+      }];
+    },
     cellText() {
       const { title, count } = this.rubric;
       let text = `${title} (count: ${count})`;
@@ -15,11 +20,6 @@ const useRubric = {
       ), 0);
       const results = subrubricsCountSum + this.rubric.count;
       return results;
-    },
-    rootCss() {
-      return ['row', {
-        'row_disabled': this.disabled,
-      }];
     },
     link() {
       const { url } = this.rubric;
