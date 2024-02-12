@@ -22,6 +22,7 @@
         <RubricRow
           :rubric="rubric"
           @click="toggleRubricVisibility(rubric)"
+          :disabled="rubric.children.length < 1"
           with-arrow
         />
         <div v-if="openedRubricId === rubric.id">
