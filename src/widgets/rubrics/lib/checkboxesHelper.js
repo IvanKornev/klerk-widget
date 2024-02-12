@@ -1,29 +1,39 @@
 function addSubrubric(payload = {}) {
-  const { rubricId, subrubricId } = payload;
+  const { rubricId, subrubric } = payload;
   if (!this.checkedRubrics[rubricId]) {
     this.checkedRubrics[rubricId] = [];
   }
-  this.checkedRubrics[rubricId].push(subrubricId);
+  this.checkedRubrics[rubricId].push(subrubric.id);
+  this.activeSubrubricsCounts[subrubric.id] = subrubric.count;
 };
 
 function removeSubrubric(payload = {}) {
-  const { rubricId, subrubricId } = payload;
+  const { rubricId, subrubric } = payload;
   const filteredRubrics = this.checkedRubrics[rubricId].filter(
-    (currentId) => subrubricId !== currentId,
+    (currentId) => subrubric.id !== currentId,
   );
   this.checkedRubrics[rubricId] = filteredRubrics;
   if (this.checkedRubrics[rubricId].length === 0) {
     delete this.checkedRubrics[rubricId];
   }
+  delete this.activeSubrubricsCounts[subrubric.id];
 };
 
 function addRubric(payload = {}) {
-  const { rubricId, subrubricsIds } = payload;
-  this.checkedRubrics[rubricId] = [...subrubricsIds];
+  const { rubricId, subrubrics } = payload;
+  this.checkedRubrics[rubricId] = [...subrubrics.ids];
+  this.activeSubrubricsCounts = {
+    ...this.activeSubrubricsCounts,
+    ...subrubrics.counts,
+  };
 };
 
-function removeRubric(rubricId) {
+function removeRubric(payload = {}) {
+  const { rubricId, subrubrics } = payload;
   delete this.checkedRubrics[rubricId];
+  subrubrics.ids.forEach((subrubricId) => {
+    delete this.activeSubrubricsCounts[subrubricId];
+  });
 };
 
 const checkboxesHelper = {

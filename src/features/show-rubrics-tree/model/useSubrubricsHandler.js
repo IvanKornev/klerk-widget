@@ -7,7 +7,7 @@ const useSubrubricsHandler = {
       }
       const payload = {
         rubricId: rubric.id,
-        subrubricId: subrubric.id,
+        subrubric,
       };
       this.$emit('checked-rubrics-change', payload, actionName);
     },

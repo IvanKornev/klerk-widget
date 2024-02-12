@@ -1,5 +1,6 @@
 <template>
   <main class="page">
+    <p>{{ JSON.stringify(activeSubrubricsCounts) }}</p>
     <RubricSumTitle
       :list="rubricsTree"
       :checked-rubrics="checkedRubrics"

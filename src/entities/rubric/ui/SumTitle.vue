@@ -1,5 +1,5 @@
 <template>
-  <h1>Сумма count-ов отмеченных чекбоксов: {{ countsSum }}</h1>
+  <h1>Сумма count-ов отмеченных чекбоксов: {{ parentsSum }}</h1>
 </template>
 
 <script>
@@ -19,13 +19,13 @@ export default {
     },
   },
   computed: {
-    countsSum() {
+    parentsSum() {
       let sum = 0;
       this.list.forEach((rubric) => {
         const { id, children, count } = rubric;
-        const rubricWasSelected = this.checkedRubrics[id] &&
+        const parentRubricWasSelected = this.checkedRubrics[id] &&
           this.checkedRubrics[id].length === children.length;
-        if (rubricWasSelected) {
+        if (parentRubricWasSelected) {
           sum += count;
         }
       });
