@@ -1,8 +1,8 @@
-const useRubric = {
+const useRow = {
   computed: {
     rootCss() {
       return ['row', {
-        'row_disabled': this.disabled,
+        'row_is-open': this.isOpen,
       }];
     },
     cellText() {
@@ -36,4 +36,4 @@ const useRubric = {
   },
 };
 
-export default useRubric;
+export default useRow;

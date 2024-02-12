@@ -38,6 +38,7 @@
             @checkbox-click="handleRubric(rubric)"
             @arrow-click="toggleRubricVisibility(rubric)"
             :active="rubricWasAdded(rubric)"
+            :is-open="openedRubricId === rubric.id"
             :with-arrow="rubric.children.length > 0"
             with-count-sum
           />
