@@ -42,10 +42,6 @@ export default {
       },
     },
   },
-  async created() {
-    const list = await this.$api.rubrics.getAll();
-    console.log('LIST', list);
-  },
   methods: {
     toggleTreeVisibility() {
       this.treeIsOpen = !this.treeIsOpen;
