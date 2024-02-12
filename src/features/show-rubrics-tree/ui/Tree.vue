@@ -5,7 +5,7 @@
       @click="toggleTreeVisibility"
     >
       <h3 class="header__subtitle">
-        Рубрики
+        РУБРИКИ
       </h3>
       <div class="header__icon_arrow">
         <v-icon icon="keyboard_arrow_down" />
