@@ -26,6 +26,7 @@
       <div v-for="rubric in list" :key="rubric.id" class="list__item">
         <RubricRow
           :rubric="rubric"
+          @checkbox-click="handleRubric(rubric)"
           @arrow-click="toggleRubricVisibility(rubric)"
           :disabled="rubric.children.length < 1"
           with-total-count
@@ -81,6 +82,23 @@ export default {
       return ['tree', {
         'tree_disabled': this.disabled,
       }];
+    },
+    subrubricsIds() {
+      const results = {};
+      this.list.forEach((rubric) => {
+        results[rubric.id] = rubric.children.map(({ id }) => id);
+      });
+      return results;
+    },
+  },
+  methods: {
+    handleRubric(rubric) {
+      const actionName = 'rubric-adding';
+      const payload = {
+        rubricId: rubric.id,
+        subrubricsIds: this.subrubricsIds[rubric.id],
+      };
+      this.$emit('checked-rubrics-change', payload, actionName);
     },
   },
 };
