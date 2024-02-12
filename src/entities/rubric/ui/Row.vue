@@ -4,10 +4,9 @@
       <checkbox />
       <p class="cell__text">
         {{ rubric.title }}
-        <a
-          :href="`https://klerk.ru${rubric.url}`"
-          target="_blank"
-        ><v-icon icon="link" /></a>
+        <a :href="link" target="_blank">
+          <v-icon icon="link" />
+        </a>
       </p>
     </div>
     <div @click="$emit('click')">
@@ -30,6 +29,13 @@ export default {
           children: [],
         };
       },
+    },
+  },
+  computed: {
+    link() {
+      const { url } = this.rubric;
+      const results = `https://klerk.ru${url}`;
+      return results;
     },
   },
 };
