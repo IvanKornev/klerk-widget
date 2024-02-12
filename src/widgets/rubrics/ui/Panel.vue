@@ -1,6 +1,6 @@
 <template>
   <main>
-    <p>{{ JSON.stringify(checkedRubrics) }}</p>
+    <p>{{ JSON.stringify(countsSum) }}</p>
     <RubricsTree
       :list="rubricsTree"
       :disabled="isLoading"
@@ -20,5 +20,19 @@ export default {
     RubricsTree,
   },
   mixins: [useTreeLoader, useRubricsCheckboxes],
+  computed: {
+    countsSum() {
+      let sum = 0;
+      this.rubricsTree.forEach((rubric) => {
+        const { id, children, count } = rubric;
+        const rubricWasSelected = this.checkedRubrics[id] &&
+          this.checkedRubrics[id].length === children.length;
+        if (rubricWasSelected) {
+          sum += count;
+        }
+      });
+      return sum;
+    },
+  },
 };
 </script>
