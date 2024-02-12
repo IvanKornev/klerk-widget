@@ -1,4 +1,4 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import { RubricTree } from './widgets/rubric-tree';
 
-createApp(App).mount('#app')
+createApp(RubricTree).mount('#app')
