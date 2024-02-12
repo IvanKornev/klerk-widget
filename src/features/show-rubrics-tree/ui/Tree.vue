@@ -15,6 +15,8 @@
       <div class="list__panel">
         <v-checkbox
           label="Отображать пустые рубрики"
+          class="mt-2"
+          density="compacy"
           :model-value="withEmptyRubrics"
           @click="$emit('empty-rubrics-toggle')"
           hide-details
@@ -27,13 +29,13 @@
           indeterminate
         />
       </div>
-      <Fragment v-else>
+      <div v-else>
         <div
           v-for="rubric in list"
           :key="rubric.id"
-          class="list__item"
         >
           <RubricRow
+            class="item__row"
             :rubric="rubric"
             @checkbox-click="handleRubric(rubric)"
             @arrow-click="toggleRubricVisibility(rubric)"
@@ -42,7 +44,7 @@
             :with-arrow="rubric.children.length > 0"
             with-count-sum
           />
-          <div v-if="openedRubricId === rubric.id">
+          <div v-if="openedRubricId === rubric.id" class="item__rows">
             <RubricRow
               v-for="subrubric in rubric.children"
               :key="subrubric.id"
@@ -52,7 +54,7 @@
             />
           </div>
         </div>
-      </Fragment>
+      </div>
     </div>
   </div>
 </template>
@@ -137,5 +139,22 @@ export default {
 }
 .header__icon_arrow {
   transition: transform 0.2s;
+}
+@keyframes appearing-animation {
+  0% {
+    opacity: 0;
+    transform: translateY(5vh);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.item__rows {
+  padding-left: 16px;
+}
+.item__rows,
+.item__row {
+  animation: appearing-animation 0.3s;
 }
 </style>

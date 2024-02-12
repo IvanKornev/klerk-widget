@@ -3,7 +3,8 @@
     <div class="row__cell">
       <v-checkbox
         :model-value="active"
-        class="pa-0 ma-0"
+        class="mt-2"
+        density="compacy"
         hide-details
         @click="handleClick('checkbox')"
       >
@@ -78,7 +79,7 @@ export default {
   }
   &__icon_arrow {
     cursor: pointer;
-    transition: transform 0.3s;
+    transition: transform 0.2s;
   }
 }
 </style>
