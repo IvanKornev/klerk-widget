@@ -36,7 +36,7 @@
             v-for="subrubric in rubric.children"
             :key="subrubric.id"
             :rubric="subrubric"
-            @checkbox-click="toggleSubrubric(rubric, subrubric)"
+            @checkbox-click="handleSubrubric(rubric, subrubric)"
           />
         </div>
       </div>
@@ -46,17 +46,13 @@
 
 <script>
 import { RubricRow } from '@/entities/rubric';
+import { useVisibilityToggle, useSubrubricsHandler } from '@/features/show-rubrics-tree/model';
 export default {
   emits: ['toggle-empty-rubrics', 'checked-rubrics-change'],
   components: {
     RubricRow,
   },
-  data() {
-    return {
-      treeIsOpen: false,
-      openedRubricId: null,
-    };
-  },
+  mixins: [useVisibilityToggle, useSubrubricsHandler],
   props: {
     list: {
       type: Array,
@@ -84,38 +80,6 @@ export default {
       return ['tree', {
         'tree_disabled': this.disabled,
       }];
-    },
-  },
-  methods: {
-    toggleTreeVisibility() {
-      if (!this.disabled) {
-        this.treeIsOpen = !this.treeIsOpen;
-      }
-    },
-    toggleRubricVisibility(item = {}) {
-      if (this.disabled) {
-        return;
-      }
-      const { id } = item;
-      const updatedValue = this.openedRubricId === id ? null : id;
-      this.openedRubricId = updatedValue;
-    },
-    toggleSubrubric(rubric, subrubric) {
-      let actionName = 'subrubric-adding';
-      if (this.subrubricWasAdded(rubric, subrubric)) {
-        actionName = 'subrubric-removing';
-      }
-      const payload = {
-        rubricId: rubric.id,
-        subrubricId: subrubric.id,
-      };
-      this.$emit('checked-rubrics-change', payload, actionName);
-    },
-    subrubricWasAdded(rubric, subrubric) {
-      if (!this.checkedRubrics[rubric.id]) {
-        return false;
-      }
-      return this.checkedRubrics[rubric.id].includes(subrubric.id);
     },
   },
 };
