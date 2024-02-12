@@ -1,5 +1,5 @@
 <template>
-  <div class="item__row">
+  <div class="row">
     <div class="row__cell">
       <checkbox />
       <p class="cell__text">
@@ -44,3 +44,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.row {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+</style>

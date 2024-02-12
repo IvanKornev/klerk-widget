@@ -15,6 +15,9 @@
       v-if="treeIsOpen && list.length > 0"
       class="tree__list"
     >
+      <div class="list__panel">
+        <v-checkbox label="Отображать пустые рубрики" hide-details />
+      </div>
       <div v-for="rubric in list" :key="rubric.id" class="list__item">
         <RubricRow
           :rubric="rubric"
@@ -103,11 +106,5 @@ export default {
     max-height: 350px;
     overflow-y: auto;
   }
-}
-.item__row {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
 }
 </style>

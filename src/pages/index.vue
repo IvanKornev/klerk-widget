@@ -16,10 +16,11 @@ export default {
   data() {
     return {
       treeList: [],
+      withEmptyRubrics: false,
     };
   },
   async created() {
-    this.treeList = await this.$api.rubrics.getAll();
+    this.treeList = await this.$api.rubrics.getAll(this.withEmptyRubrics);
   },
 };
 </script>
