@@ -1,13 +1,16 @@
 <template>
   <div :class="rootCss">
     <div class="row__cell">
-      <checkbox />
-      <p class="cell__text">
-        {{ cellText }}
-        <a :href="link" target="_blank">
-          <v-icon icon="link" />
-        </a>
-      </p>
+      <v-checkbox class="pa-0 ma-0" hide-details>
+        <template #label>
+          <p class="cell__text">
+            {{ cellText }}
+            <a :href="link" target="_blank">
+              <v-icon icon="link" />
+            </a>
+          </p>
+        </template>
+      </v-checkbox>
     </div>
     <div v-if="withArrow" @click="handleArrowClick" class="row__icon_arrow">
       <v-icon icon="keyboard_arrow_down" />
