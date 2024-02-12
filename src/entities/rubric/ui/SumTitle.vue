@@ -1,5 +1,5 @@
 <template>
-  <h1>Сумма count-ов отмеченных чекбоксов: {{ allCountsSum }}</h1>
+  <h1 class="align-center">Сумма count-ов отмеченных чекбоксов: {{ allCountsSum }}</h1>
 </template>
 
 <script>
