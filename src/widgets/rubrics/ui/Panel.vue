@@ -13,35 +13,19 @@
 </template>
 
 <script>
+import useTreeLoader from '@/widgets/rubrics/model/useTreeLoader';
 import { RubricsTree } from '@/features/show-rubrics-tree';
 export default {
   components: {
     RubricsTree,
   },
+  mixins: [useTreeLoader],
   data() {
     return {
-      rubricsTree: [],
       checkedRubrics: {},
-      withEmptyRubrics: false,
-      isLoading: true,
     };
   },
-  watch: {
-    async withEmptyRubrics(value) {
-      await this.loadRubricsTree(value);
-    },
-  },
-  async created() {
-    await this.loadRubricsTree();
-  },
   methods: {
-    async loadRubricsTree(withEmptyRubrics = false) {
-      this.isLoading = true;
-      await this.$api.rubrics.getTree(withEmptyRubrics).then((results) => {
-        this.rubricsTree = results;
-        this.isLoading = false;
-      });
-    },
     changeCheckedRubrics(payload, actionName) {
       const possibleActions = {
         'subrubric-adding': (payload) => this.addSubrubric(payload),
