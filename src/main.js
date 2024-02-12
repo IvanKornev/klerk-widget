@@ -1,4 +1,8 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import { vuetify, api } from '@/app/plugins';
+import MainPage from '@/pages/index';
 
-createApp(App).mount('#app')
+createApp(MainPage)
+  .use(vuetify)
+  .use(api)
+  .mount('#app');
