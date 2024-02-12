@@ -1,5 +1,5 @@
 import useRubricsCheckboxes from './useRubricsCheckboxes';
-import useTreeLoader from './useRubricsCheckboxes';
+import useTreeLoader from './useTreeLoader';
 
 export {
   useRubricsCheckboxes,

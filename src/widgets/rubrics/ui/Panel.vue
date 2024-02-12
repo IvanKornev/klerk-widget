@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { useRubricsCheckboxes, useTreeLoader } from '@/widgets/rubrics/mixins';
+import { useRubricsCheckboxes, useTreeLoader } from '@/widgets/rubrics/model';
 import { RubricsTree } from '@/features/show-rubrics-tree';
 export default {
   components: {
