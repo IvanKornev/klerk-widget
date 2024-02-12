@@ -13,6 +13,7 @@
             <checkbox />
             <p class="cell__text">
               {{ rubric.title }}
+              <a :href="`https://klerk.ru${rubric.url}`" target="_blank"><v-icon icon="link" /></a>
             </p>
           </div>
           <div @click="toggleRubricVisibility(rubric)">
@@ -93,5 +94,11 @@ export default {
     max-height: 350px;
     overflow-y: auto;
   }
+}
+.item__row {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
 }
 </style>
