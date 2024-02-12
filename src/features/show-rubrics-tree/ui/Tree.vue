@@ -29,7 +29,8 @@
           @checkbox-click="handleRubric(rubric)"
           @arrow-click="toggleRubricVisibility(rubric)"
           :disabled="rubric.children.length < 1"
-          with-total-count
+          :active="rubricWasAdded(rubric)"
+          with-count-sum
           with-arrow
         />
         <div v-if="openedRubricId === rubric.id">

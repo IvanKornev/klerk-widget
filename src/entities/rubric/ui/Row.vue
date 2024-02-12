@@ -42,7 +42,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    withTotalCount: {
+    withCountSum: {
       type: Boolean,
       default: false,
     },
@@ -59,17 +59,17 @@ export default {
     cellText() {
       const { title, count } = this.rubric;
       let text = `${title} (count: ${count})`;
-      if (this.withTotalCount) {
-        const totalCountLine = `сумма count-ов: ${this.totalCount}`;
-        text = `${title} (count: ${count}; ${totalCountLine})`;
+      if (this.withCountSum) {
+        const countSumLine = `сумма count-ов: ${this.countSum}`;
+        text = `${title} (count: ${count}; ${countSumLine})`;
       }
       return text;
     },
-    totalCount() {
-      const subrubricsTotalCount = this.rubric.children.reduce((acc, item) => (
+    countSum() {
+      const subrubricsCountSum = this.rubric.children.reduce((acc, item) => (
         acc += item.count
       ), 0);
-      const results = subrubricsTotalCount + this.rubric.count;
+      const results = subrubricsCountSum + this.rubric.count;
       return results;
     },
     rootCss() {
