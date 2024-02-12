@@ -124,6 +124,8 @@ export default {
   &__list {
     max-height: 350px;
     overflow-y: auto;
+    margin-top: 16px;
+    padding-right: 16px;
   }
 }
 .list__preloader {
