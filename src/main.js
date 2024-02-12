@@ -1,14 +1,5 @@
 import { createApp } from 'vue';
-import { RubricTree } from './widgets/rubric-tree';
-
-import 'vuetify/styles';
-import { createVuetify } from 'vuetify';
-import * as components from 'vuetify/components';
-import * as directives from 'vuetify/directives';
-
-const vuetify = createVuetify({
-  components,
-  directives,
-});
+import { vuetify } from '@/app/plugins';
+import { RubricTree } from '@/widgets/rubric-tree';
 
 createApp(RubricTree).use(vuetify).mount('#app');
