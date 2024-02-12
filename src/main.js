@@ -1,8 +1,8 @@
 import { createApp } from 'vue';
 import { vuetify, api } from '@/app/plugins';
-import { RubricTree } from '@/widgets/rubric-tree';
+import MainPage from '@/pages/index';
 
-createApp(RubricTree)
+createApp(MainPage)
   .use(vuetify)
   .use(api)
   .mount('#app');
