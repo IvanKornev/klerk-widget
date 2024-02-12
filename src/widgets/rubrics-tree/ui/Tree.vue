@@ -16,7 +16,11 @@
       class="tree__list"
     >
       <div v-for="rubric in list" :key="rubric.id" class="list__item">
-        <RubricRow :rubric="rubric" @click="toggleRubricVisibility(rubric)" />
+        <RubricRow
+          :rubric="rubric"
+          @click="toggleRubricVisibility(rubric)"
+          with-arrow
+        />
         <div v-if="openedRubricId === rubric.id">
           <RubricRow
             v-for="childRubric in rubric.children"

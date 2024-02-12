@@ -9,7 +9,7 @@
         </a>
       </p>
     </div>
-    <div @click="$emit('click')">
+    <div v-if="withArrow" @click="$emit('click')">
       <v-icon icon="keyboard_arrow_down" />
     </div>
   </div>
@@ -29,6 +29,10 @@ export default {
           children: [],
         };
       },
+    },
+    withArrow: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
