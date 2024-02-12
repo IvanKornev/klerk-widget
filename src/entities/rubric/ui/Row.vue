@@ -37,10 +37,12 @@
       <RubricRow
         v-for="subrubric in rubric.children"
         :opened-rubrics-ids="openedRubricsIds"
+        :checked-rubrics="checkedRubrics"
         :key="subrubric.id"
         :rubric="subrubric"
         :with-arrow="subrubric.children && subrubric.children.length > 0"
         :is-open="openedRubricsIds.includes(subrubric.id)"
+        :active="subrubricWasAdded(rubric, subrubric)"
         @click="$emit('arrow-click', subrubric)"
       />
     </div>
@@ -48,16 +50,22 @@
 </template>
 
 <script>
-import { useRow } from '@/entities/rubric/model';
+import { useRow, useSubrubricsHandler } from '@/entities/rubric/model';
 export default {
   name: 'RubricRow',
   emits: ['arrow-click', 'checkbox-click'],
-  mixins: [useRow],
+  mixins: [useRow, useSubrubricsHandler],
   props: {
     openedRubricsIds: {
       type: Array,
       default() {
         return [];
+      },
+    },
+    checkedRubrics: {
+      type: Object,
+      defualt() {
+        return {};
       },
     },
     rubric: {

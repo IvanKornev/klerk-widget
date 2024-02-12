@@ -43,6 +43,7 @@
           <RubricRow
             class="item__row"
             :rubric="rubric"
+            :checked-rubrics="checkedRubrics"
             :opened-rubrics-ids="openedRubricsIds"
             @checkbox-click="handleRubric(rubric)"
             @arrow-click="toggleRubricVisibility"
@@ -58,18 +59,14 @@
 </template>
 
 <script>
+import { useVisibilityToggle, useRubricsHandler } from '@/features/show-rubrics-tree/model';
 import { RubricRow } from '@/entities/rubric';
-import {
-  useVisibilityToggle,
-  useSubrubricsHandler,
-  useRubricsHandler,
-} from '@/features/show-rubrics-tree/model';
 export default {
   emits: ['empty-rubrics-toggle', 'checked-rubrics-change'],
   components: {
     RubricRow,
   },
-  mixins: [useVisibilityToggle, useSubrubricsHandler, useRubricsHandler],
+  mixins: [useVisibilityToggle, useRubricsHandler],
   props: {
     list: {
       type: Array,
