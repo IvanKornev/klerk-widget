@@ -1,27 +1,28 @@
 <template>
   <section :class="rootCss">
-    <div class="tree__header" @click="toggleTreeVisibility">
-      <h3 class="header__subtitle">Рубрики</h3>
+    <div
+      class="tree__header"
+      @click="toggleTreeVisibility"
+    >
+      <h3 class="header__subtitle">
+        Рубрики
+      </h3>
       <div>
         <v-icon icon="keyboard_arrow_down" />
       </div>
     </div>
-    <div v-if="treeIsOpen && list.length > 0" class="tree__list">
-      <div v-for="(rubric, index) in list" :key="index" class="list__item">
-        <div class="item__row">
-          <div class="row__cell">
-            <checkbox />
-            <p class="cell__text">
-              {{ rubric.title }}
-              <a :href="`https://klerk.ru${rubric.url}`" target="_blank"><v-icon icon="link" /></a>
-            </p>
-          </div>
-          <div @click="toggleRubricVisibility(rubric)">
-            <v-icon icon="keyboard_arrow_down" />
-          </div>
-        </div>
+    <div
+      v-if="treeIsOpen && list.length > 0"
+      class="tree__list"
+    >
+      <div v-for="rubric in list" :key="rubric.id" class="list__item">
+        <RubricRow :rubric="rubric" @click="toggleRubricVisibility(rubric)" />
         <div v-if="openedRubricId === rubric.id">
-          {{ JSON.stringify(rubric.children) }}
+          <RubricRow
+            v-for="childRubric in rubric.children"
+            :key="childRubric.id"
+            :rubric="childRubric"
+          />
         </div>
       </div>
     </div>
@@ -29,7 +30,11 @@
 </template>
 
 <script>
+import { RubricRow } from '@/entities/rubric';
 export default {
+  components: {
+    RubricRow,
+  },
   data() {
     return {
       treeIsOpen: false,
