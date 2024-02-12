@@ -11,7 +11,10 @@
         <v-icon icon="keyboard_arrow_down" />
       </div>
     </div>
-    <div v-if="treeIsOpen" class="tree__list">
+    <div
+      v-if="treeIsOpen"
+      class="tree__list"
+    >
       <div class="list__panel">
         <v-checkbox
           label="Отображать пустые рубрики"
@@ -22,7 +25,10 @@
           hide-details
         />
       </div>
-      <div v-if="isLoading" class="list__preloader">
+      <div
+        v-if="isLoading"
+        class="list__preloader"
+      >
         <v-progress-circular
           size="50"
           width="8"
@@ -44,15 +50,6 @@
             :with-arrow="rubric.children.length > 0"
             with-count-sum
           />
-          <div v-if="openedRubricId === rubric.id" class="item__rows">
-            <RubricRow
-              v-for="subrubric in rubric.children"
-              :key="subrubric.id"
-              :rubric="subrubric"
-              @checkbox-click="handleSubrubric(rubric, subrubric)"
-              :active="subrubricWasAdded(rubric, subrubric)"
-            />
-          </div>
         </div>
       </div>
     </div>
@@ -140,20 +137,6 @@ export default {
 .header__icon_arrow {
   transition: transform 0.2s;
 }
-@keyframes appearing-animation {
-  0% {
-    opacity: 0;
-    transform: translateY(5vh);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.item__rows {
-  padding-left: 16px;
-}
-.item__rows,
 .item__row {
   animation: appearing-animation 0.3s;
 }

@@ -1,39 +1,53 @@
 <template>
-  <div :class="rootCss">
-    <div class="row__cell">
-      <v-checkbox
-        :model-value="active"
-        class="mt-2"
-        density="compacy"
-        hide-details
-        @click="handleClick('checkbox')"
+  <Fragment>
+    <div :class="rootCss">
+      <div class="row__cell">
+        <v-checkbox
+          :model-value="active"
+          class="mt-2"
+          density="compacy"
+          hide-details
+          @click="handleClick('checkbox')"
+        >
+          <template #label>
+            <p class="cell__text">
+              {{ cellText }}
+              <a
+                :href="link"
+                target="_blank"
+              >
+                <v-icon icon="link" />
+              </a>
+            </p>
+          </template>
+        </v-checkbox>
+      </div>
+      <div
+        v-if="withArrow"
+        @click="handleClick('arrow')"
+        class="row__icon_arrow"
       >
-        <template #label>
-          <p class="cell__text">
-            {{ cellText }}
-            <a
-              :href="link"
-              target="_blank"
-            >
-              <v-icon icon="link" />
-            </a>
-          </p>
-        </template>
-      </v-checkbox>
+        <v-icon icon="keyboard_arrow_down" />
+      </div>
     </div>
     <div
-      v-if="withArrow"
-      @click="handleClick('arrow')"
-      class="row__icon_arrow"
+      v-if="rubric.children && rubric.children.length > 0"
+      class="row__list_children"
     >
-      <v-icon icon="keyboard_arrow_down" />
+      <RubricRow
+        v-for="subrubric in rubric.children"
+        :key="subrubric.id"
+        :rubric="subrubric"
+        :with-arrow="subrubric?.children?.length > 0"
+      />
     </div>
-  </div>
+  </Fragment>
 </template>
 
 <script>
 import { useRow } from '@/entities/rubric/model';
 export default {
+  name: 'RubricRow',
   emits: ['arrow-click', 'checkbox-click'],
   mixins: [useRow],
   props: {
@@ -80,6 +94,10 @@ export default {
   &__icon_arrow {
     cursor: pointer;
     transition: transform 0.2s;
+  }
+  &__list_children {
+    animation: appearing-animation 0.3s;
+    padding-left: 16px;
   }
 }
 </style>
