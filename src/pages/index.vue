@@ -1,10 +1,12 @@
 <template>
   <main>
+    <p>{{ JSON.stringify(checkedRubrics) }}</p>
     <RubricsTree
       :list="rubricsTree"
       :disabled="isLoading"
       :with-empty-rubrics="withEmptyRubrics"
       @toggle-empty-rubrics="withEmptyRubrics = !withEmptyRubrics"
+      @checked-rubrics-change="addSubrubric"
     />
   </main>
 </template>
@@ -18,6 +20,7 @@ export default {
   data() {
     return {
       rubricsTree: [],
+      checkedRubrics: {},
       withEmptyRubrics: false,
       isLoading: true,
     };
@@ -37,6 +40,13 @@ export default {
         this.rubricsTree = results;
         this.isLoading = false;
       });
+    },
+    addSubrubric(payload = {}) {
+      const { rubricId, subrubricId } = payload;
+      if (!this.checkedRubrics[rubricId]) {
+        this.checkedRubrics[rubricId] = [];
+      }
+      this.checkedRubrics[rubricId].push(subrubricId);
     },
   },
 };

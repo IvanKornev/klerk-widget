@@ -26,7 +26,7 @@
       <div v-for="rubric in list" :key="rubric.id" class="list__item">
         <RubricRow
           :rubric="rubric"
-          @click="toggleRubricVisibility(rubric)"
+          @arrow-click="toggleRubricVisibility(rubric)"
           :disabled="rubric.children.length < 1"
           with-total-count
           with-arrow
@@ -36,6 +36,7 @@
             v-for="subrubric in rubric.children"
             :key="subrubric.id"
             :rubric="subrubric"
+            @checkbox-click="toggleSubrubric(rubric, subrubric)"
           />
         </div>
       </div>
@@ -46,7 +47,7 @@
 <script>
 import { RubricRow } from '@/entities/rubric';
 export default {
-  emits: ['toggle-empty-rubrics'],
+  emits: ['toggle-empty-rubrics', 'checked-rubrics-change'],
   components: {
     RubricRow,
   },
@@ -92,6 +93,12 @@ export default {
       const { id } = item;
       const updatedValue = this.openedRubricId === id ? null : id;
       this.openedRubricId = updatedValue;
+    },
+    toggleSubrubric(rubric, subrubric) {
+      this.$emit('checked-rubrics-change', {
+        rubricId: rubric.id,
+        subrubricId: subrubric.id,
+      });
     },
   },
 };

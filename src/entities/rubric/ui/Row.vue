@@ -1,7 +1,7 @@
 <template>
   <div :class="rootCss">
     <div class="row__cell">
-      <v-checkbox class="pa-0 ma-0" hide-details>
+      <v-checkbox class="pa-0 ma-0" hide-details @click="handleClick('checkbox')">
         <template #label>
           <p class="cell__text">
             {{ cellText }}
@@ -12,7 +12,7 @@
         </template>
       </v-checkbox>
     </div>
-    <div v-if="withArrow" @click="handleArrowClick" class="row__icon_arrow">
+    <div v-if="withArrow" @click="handleClick('arrow')" class="row__icon_arrow">
       <v-icon icon="keyboard_arrow_down" />
     </div>
   </div>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  emits: ['click'],
+  emits: ['arrow-click', 'checkbox-click'],
   props: {
     rubric: {
       type: Object,
@@ -75,9 +75,9 @@ export default {
     },
   },
   methods: {
-    handleArrowClick() {
+    handleClick(type = 'arrow') {
       if (!this.disabled) {
-        this.$emit('click');
+        this.$emit(`${type}-click`);
       }
     },
   },
