@@ -16,7 +16,12 @@
       class="tree__list"
     >
       <div class="list__panel">
-        <v-checkbox label="Отображать пустые рубрики" hide-details />
+        <v-checkbox
+          label="Отображать пустые рубрики"
+          :model-value="withEmptyRubrics"
+          @click="$emit('toggle-empty-rubrics')"
+          hide-details
+        />
       </div>
       <div v-for="rubric in list" :key="rubric.id" class="list__item">
         <RubricRow
@@ -40,6 +45,7 @@
 <script>
 import { RubricRow } from '@/entities/rubric';
 export default {
+  emits: ['toggle-empty-rubrics'],
   components: {
     RubricRow,
   },
@@ -57,6 +63,10 @@ export default {
       },
     },
     disabled: {
+      type: Boolean,
+      default: false,
+    },
+    withEmptyRubrics: {
       type: Boolean,
       default: false,
     },
