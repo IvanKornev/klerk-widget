@@ -44,6 +44,8 @@
         :is-open="openedRubricsIds.includes(subrubric.id)"
         :active="subrubricWasAdded(rubric, subrubric)"
         @arrow-click="$emit('arrow-click', subrubric)"
+        @checkbox-click="handleSubrubric(rubric, subrubric)"
+        @checked-rubrics-change="(...args) => $emit('checked-rubrics-change', ...args)"
       />
     </div>
   </Fragment>
@@ -53,7 +55,7 @@
 import { useRow, useSubrubricsHandler } from '@/entities/rubric/model';
 export default {
   name: 'RubricRow',
-  emits: ['arrow-click', 'checkbox-click'],
+  emits: ['arrow-click', 'checkbox-click', 'checked-rubrics-change'],
   mixins: [useRow, useSubrubricsHandler],
   props: {
     openedRubricsIds: {

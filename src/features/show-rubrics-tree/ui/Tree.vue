@@ -47,6 +47,7 @@
             :opened-rubrics-ids="openedRubricsIds"
             @checkbox-click="handleRubric(rubric)"
             @arrow-click="toggleRubricVisibility"
+            @checked-rubrics-change="emitCheckedRubricsChanged"
             :active="rubricWasAdded(rubric)"
             :is-open="openedRubricsIds.includes(rubric.id)"
             :with-arrow="rubric?.children?.length > 0"
@@ -95,6 +96,11 @@ export default {
         'tree_is-loading': this.isLoading,
         'tree_is-open': this.treeIsOpen,
       }];
+    },
+  },
+  methods: {
+    emitCheckedRubricsChanged(...args) {
+      this.$emit('checked-rubrics-change', ...args);
     },
   },
 };
