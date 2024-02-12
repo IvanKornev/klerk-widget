@@ -58,10 +58,10 @@ export default {
   computed: {
     cellText() {
       const { title, count } = this.rubric;
-      let text = `${title} (кол-во: ${count})`;
+      let text = `${title} (count: ${count})`;
       if (this.withTotalCount) {
-        const totalCountLine = `сумма количеств: ${this.totalCount}`;
-        text = `${title} (кол-во: ${count}; ${totalCountLine})`;
+        const totalCountLine = `сумма count-ов: ${this.totalCount}`;
+        text = `${title} (count: ${count}; ${totalCountLine})`;
       }
       return text;
     },
