@@ -1,7 +1,12 @@
 <template>
   <div :class="rootCss">
     <div class="row__cell">
-      <v-checkbox class="pa-0 ma-0" hide-details @click="handleClick('checkbox')">
+      <v-checkbox
+        :model-value="active"
+        class="pa-0 ma-0"
+        hide-details
+        @click="handleClick('checkbox')"
+      >
         <template #label>
           <p class="cell__text">
             {{ cellText }}
@@ -19,8 +24,10 @@
 </template>
 
 <script>
+import { useRow } from '@/entities/rubric/model';
 export default {
   emits: ['arrow-click', 'checkbox-click'],
+  mixins: [useRow],
   props: {
     rubric: {
       type: Object,
@@ -37,7 +44,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    withTotalCount: {
+    withCountSum: {
       type: Boolean,
       default: false,
     },
@@ -45,40 +52,9 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  computed: {
-    cellText() {
-      const { title, count } = this.rubric;
-      let text = `${title} (кол-во: ${count})`;
-      if (this.withTotalCount) {
-        const totalCountLine = `сумма количеств: ${this.totalCount}`;
-        text = `${title} (кол-во: ${count}; ${totalCountLine})`;
-      }
-      return text;
-    },
-    totalCount() {
-      const subrubricsTotalCount = this.rubric.children.reduce((acc, item) => (
-        acc += item.count
-      ), 0);
-      const results = subrubricsTotalCount + this.rubric.count;
-      return results;
-    },
-    rootCss() {
-      return ['row', {
-        'row_disabled': this.disabled,
-      }];
-    },
-    link() {
-      const { url } = this.rubric;
-      const results = `https://klerk.ru${url}`;
-      return results;
-    },
-  },
-  methods: {
-    handleClick(type = 'arrow') {
-      if (!this.disabled) {
-        this.$emit(`${type}-click`);
-      }
+    active: {
+      type: Boolean,
+      default: false,
     },
   },
 };

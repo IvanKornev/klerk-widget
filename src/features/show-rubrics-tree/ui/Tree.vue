@@ -26,9 +26,11 @@
       <div v-for="rubric in list" :key="rubric.id" class="list__item">
         <RubricRow
           :rubric="rubric"
+          @checkbox-click="handleRubric(rubric)"
           @arrow-click="toggleRubricVisibility(rubric)"
           :disabled="rubric.children.length < 1"
-          with-total-count
+          :active="rubricWasAdded(rubric)"
+          with-count-sum
           with-arrow
         />
         <div v-if="openedRubricId === rubric.id">
@@ -36,7 +38,8 @@
             v-for="subrubric in rubric.children"
             :key="subrubric.id"
             :rubric="subrubric"
-            @checkbox-click="toggleSubrubric(rubric, subrubric)"
+            @checkbox-click="handleSubrubric(rubric, subrubric)"
+            :active="subrubricWasAdded(rubric, subrubric)"
           />
         </div>
       </div>
@@ -46,22 +49,28 @@
 
 <script>
 import { RubricRow } from '@/entities/rubric';
+import {
+  useVisibilityToggle,
+  useSubrubricsHandler,
+  useRubricsHandler,
+} from '@/features/show-rubrics-tree/model';
 export default {
   emits: ['toggle-empty-rubrics', 'checked-rubrics-change'],
   components: {
     RubricRow,
   },
-  data() {
-    return {
-      treeIsOpen: false,
-      openedRubricId: null,
-    };
-  },
+  mixins: [useVisibilityToggle, useSubrubricsHandler, useRubricsHandler],
   props: {
     list: {
       type: Array,
       default() {
         return [];
+      },
+    },
+    checkedRubrics: {
+      type: Object,
+      defualt() {
+        return {};
       },
     },
     disabled: {
@@ -78,27 +87,6 @@ export default {
       return ['tree', {
         'tree_disabled': this.disabled,
       }];
-    },
-  },
-  methods: {
-    toggleTreeVisibility() {
-      if (!this.disabled) {
-        this.treeIsOpen = !this.treeIsOpen;
-      }
-    },
-    toggleRubricVisibility(item = {}) {
-      if (this.disabled) {
-        return;
-      }
-      const { id } = item;
-      const updatedValue = this.openedRubricId === id ? null : id;
-      this.openedRubricId = updatedValue;
-    },
-    toggleSubrubric(rubric, subrubric) {
-      this.$emit('checked-rubrics-change', {
-        rubricId: rubric.id,
-        subrubricId: subrubric.id,
-      });
     },
   },
 };
