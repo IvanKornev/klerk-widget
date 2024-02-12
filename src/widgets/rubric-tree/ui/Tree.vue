@@ -7,8 +7,8 @@
       </div>
     </div>
     <div v-if="treeIsOpen && list.length > 0" class="tree__list">
-      <div v-for="(item, index) in list" :key="index" class="list__item">
-        <div class="item__row">
+      <ul v-for="(item, index) in list" :key="index" class="list__item">
+        <li class="item__row">
           <div class="row__cell">
             <checkbox />
             <p class="cell__text">
@@ -18,11 +18,11 @@
           <div>
             <v-icon icon="keyboard_arrow_down" />
           </div>
-        </div>
+        </li>
         <div v-if="false">
           Подсписок
         </div>
-      </div>
+      </ul>
     </div>
   </section>
 </template>
@@ -41,6 +41,10 @@ export default {
         return [];
       },
     },
+  },
+  async created() {
+    const list = await this.$api.rubrics.getAll();
+    console.log('LIST', list);
   },
   methods: {
     toggleTreeVisibility() {
