@@ -1,7 +1,7 @@
 <template>
   <section :class="rootCss">
     <div class="tree__header" @click="toggleTreeVisibility">
-      <h3 class="header__subtitle">Выберите рубрики</h3>
+      <h3 class="header__subtitle">Рубрики</h3>
       <div>
         <v-icon icon="keyboard_arrow_down" />
       </div>
