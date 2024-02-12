@@ -1,28 +1,28 @@
 <template>
   <section :class="rootCss">
     <div class="tree__header" @click="toggleTreeVisibility">
-      <h3 class="header__subtitle">Выделите рубрики</h3>
+      <h3 class="header__subtitle">Выберите рубрики</h3>
       <div>
         <v-icon icon="keyboard_arrow_down" />
       </div>
     </div>
     <div v-if="treeIsOpen && list.length > 0" class="tree__list">
-      <ul v-for="(item, index) in list" :key="index" class="list__item">
-        <li class="item__row">
+      <div v-for="(rubric, index) in list" :key="index" class="list__item">
+        <div class="item__row">
           <div class="row__cell">
             <checkbox />
             <p class="cell__text">
-              {{ item.title }}
+              {{ rubric.title }}
             </p>
           </div>
-          <div>
+          <div @click="toggleRubricVisibility(rubric)">
             <v-icon icon="keyboard_arrow_down" />
           </div>
-        </li>
-        <div v-if="false">
-          Подсписок
         </div>
-      </ul>
+        <div v-if="openedRubricId === rubric.id">
+          {{ JSON.stringify(rubric.children) }}
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -32,6 +32,7 @@ export default {
   data() {
     return {
       treeIsOpen: false,
+      openedRubricId: null,
     };
   },
   props: {
@@ -59,6 +60,14 @@ export default {
         this.treeIsOpen = !this.treeIsOpen;
       }
     },
+    toggleRubricVisibility(item = {}) {
+      if (this.disabled) {
+        return;
+      }
+      const { id } = item;
+      const updatedValue = this.openedRubricId === id ? null : id;
+      this.openedRubricId = updatedValue;
+    },
   },
 };
 </script>
@@ -66,7 +75,7 @@ export default {
 <style lang="scss" scoped>
 .tree {
   margin: 0 auto;
-  max-width: 1000px;
+  max-width: 600px;
   transition: opacity 0.3s;
   &_disabled {
     opacity: 0.5;
@@ -77,6 +86,12 @@ export default {
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px #000 solid;
+  }
+  &__list {
+    max-height: 350px;
+    overflow-y: auto;
   }
 }
 </style>
