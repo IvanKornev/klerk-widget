@@ -19,7 +19,7 @@
         <v-checkbox
           label="Отображать пустые рубрики"
           :model-value="withEmptyRubrics"
-          @click="$emit('toggle-empty-rubrics')"
+          @click="$emit('empty-rubrics-toggle')"
           hide-details
         />
       </div>
@@ -55,7 +55,7 @@ import {
   useRubricsHandler,
 } from '@/features/show-rubrics-tree/model';
 export default {
-  emits: ['toggle-empty-rubrics', 'checked-rubrics-change'],
+  emits: ['empty-rubrics-toggle', 'checked-rubrics-change'],
   components: {
     RubricRow,
   },

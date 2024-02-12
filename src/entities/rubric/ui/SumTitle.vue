@@ -1,11 +1,17 @@
 <template>
-  <h1>Сумма count-ов отмеченных чекбоксов: {{ parentsSum }}</h1>
+  <h1>Сумма count-ов отмеченных чекбоксов: {{ allCountsSum }}</h1>
 </template>
 
 <script>
 export default {
   props: {
-    list: {
+    activeSubrubricsCounts: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    rubricsTree: {
       type: Array,
       default() {
         return [];
@@ -13,15 +19,24 @@ export default {
     },
     checkedRubrics: {
       type: Object,
-      defualt() {
+      default() {
         return {};
       },
     },
   },
   computed: {
+    allCountsSum() {
+      return this.parentsSum + this.childrenSum;
+    },
+    childrenSum() {
+      const onlyCounts = Object.values(this.activeSubrubricsCounts);
+      return onlyCounts.reduce((acc, count) => (
+        acc += count
+      ), 0);
+    },
     parentsSum() {
       let sum = 0;
-      this.list.forEach((rubric) => {
+      this.rubricsTree.forEach((rubric) => {
         const { id, children, count } = rubric;
         const parentRubricWasSelected = this.checkedRubrics[id] &&
           this.checkedRubrics[id].length === children.length;
