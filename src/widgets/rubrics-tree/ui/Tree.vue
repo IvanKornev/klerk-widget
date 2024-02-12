@@ -1,5 +1,5 @@
 <template>
-  <section class="tree">
+  <section :class="rootCss">
     <div class="tree__header" @click="toggleTreeVisibility">
       <h3 class="header__subtitle">Выделите рубрики</h3>
       <div>
@@ -41,10 +41,23 @@ export default {
         return [];
       },
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    rootCss() {
+      return ['tree', {
+        'tree_disabled': this.disabled,
+      }];
+    },
   },
   methods: {
     toggleTreeVisibility() {
-      this.treeIsOpen = !this.treeIsOpen;
+      if (!this.disabled) {
+        this.treeIsOpen = !this.treeIsOpen;
+      }
     },
   },
 };
@@ -54,6 +67,11 @@ export default {
 .tree {
   margin: 0 auto;
   max-width: 1000px;
+  transition: opacity 0.3s;
+  &_disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
   &__header {
     display: flex;
     align-items: center;

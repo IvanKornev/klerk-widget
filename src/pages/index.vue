@@ -1,6 +1,9 @@
 <template>
   <main>
-    <RubricsTree :list="treeList" />
+    <RubricsTree
+      :list="treeList"
+      :disabled="treeList.length < 1"
+    />
   </main>
 </template>
 
