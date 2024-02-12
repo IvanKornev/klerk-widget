@@ -8,7 +8,7 @@
     <section class="page__tree">
       <RubricsTree
         :list="rubricsTree"
-        :disabled="isLoading"
+        :is-loading="isLoading"
         :checked-rubrics="checkedRubrics"
         :with-empty-rubrics="withEmptyRubrics"
         @empty-rubrics-toggle="withEmptyRubrics = !withEmptyRubrics"
