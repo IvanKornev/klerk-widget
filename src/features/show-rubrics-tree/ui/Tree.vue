@@ -48,13 +48,17 @@
 
 <script>
 import { RubricRow } from '@/entities/rubric';
-import { useVisibilityToggle, useSubrubricsHandler } from '@/features/show-rubrics-tree/model';
+import {
+  useVisibilityToggle,
+  useSubrubricsHandler,
+  useRubricsHandler,
+} from '@/features/show-rubrics-tree/model';
 export default {
   emits: ['toggle-empty-rubrics', 'checked-rubrics-change'],
   components: {
     RubricRow,
   },
-  mixins: [useVisibilityToggle, useSubrubricsHandler],
+  mixins: [useVisibilityToggle, useSubrubricsHandler, useRubricsHandler],
   props: {
     list: {
       type: Array,
@@ -82,23 +86,6 @@ export default {
       return ['tree', {
         'tree_disabled': this.disabled,
       }];
-    },
-    subrubricsIds() {
-      const results = {};
-      this.list.forEach((rubric) => {
-        results[rubric.id] = rubric.children.map(({ id }) => id);
-      });
-      return results;
-    },
-  },
-  methods: {
-    handleRubric(rubric) {
-      const actionName = 'rubric-adding';
-      const payload = {
-        rubricId: rubric.id,
-        subrubricsIds: this.subrubricsIds[rubric.id],
-      };
-      this.$emit('checked-rubrics-change', payload, actionName);
     },
   },
 };
