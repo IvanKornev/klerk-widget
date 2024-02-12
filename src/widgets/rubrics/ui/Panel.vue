@@ -28,6 +28,12 @@ export default {
     RubricSumTitle,
   },
   mixins: [useTreeLoader, useRubricsCheckboxes],
+  watch: {
+    isLoading() {
+      this.checkedRubrics = {};
+      this.activeSubrubricsCounts = {};
+    },
+  },
 };
 </script>
 
