@@ -20,6 +20,13 @@ const useVisibilityToggle = {
       if (this.isLoading) {
         return;
       }
+      const withoutDublicates = this.openedRubricsIds.filter(
+        (id) => id !== item.id
+      );
+      if (withoutDublicates.length !== this.openedRubricsIds.length) {
+        this.openedRubricsIds = withoutDublicates;
+        return;
+      }
       this.openedRubricsIds.push(item.id);
     },
   },
