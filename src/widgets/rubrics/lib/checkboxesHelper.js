@@ -22,6 +22,10 @@ function addRubric(payload = {}) {
   this.checkedRubrics[rubricId] = [...subrubricsIds];
 };
 
+function removeRubric(rubricId) {
+  delete this.checkedRubrics[rubricId];
+};
+
 const checkboxesHelper = {
   subrubric: {
     add: addSubrubric,
@@ -29,6 +33,7 @@ const checkboxesHelper = {
   },
   rubric: {
     add: addRubric,
+    remove: removeRubric,
   },
 };
 

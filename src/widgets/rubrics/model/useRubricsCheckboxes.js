@@ -14,6 +14,7 @@ const useRubricsCheckboxes = {
         'subrubric-adding': subrubric.add,
         'subrubric-removing': subrubric.remove,
         'rubric-adding': rubric.add,
+        'rubric-removing': rubric.remove,
       };
       const actionCallback = POSSIBLE_ACTIONS[actionName];
       actionCallback.bind(this)(payload);
