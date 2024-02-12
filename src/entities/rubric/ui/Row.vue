@@ -43,7 +43,7 @@
         :with-arrow="subrubric.children && subrubric.children.length > 0"
         :is-open="openedRubricsIds.includes(subrubric.id)"
         :active="subrubricWasAdded(rubric, subrubric)"
-        @click="$emit('arrow-click', subrubric)"
+        @arrow-click="$emit('arrow-click', subrubric)"
       />
     </div>
   </Fragment>
