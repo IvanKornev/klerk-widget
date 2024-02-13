@@ -78,7 +78,7 @@ export default {
     },
     checkedRubrics: {
       type: Object,
-      defualt() {
+      default() {
         return {};
       },
     },
