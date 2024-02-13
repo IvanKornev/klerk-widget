@@ -1,10 +1,4 @@
-function flat(acc, rubric) {
-  if (rubric.children && rubric.children.length > 0) {
-    return rubric.children.reduce(flat, rubric.count + acc);
-  }
-  acc += rubric.count;
-  return acc;
-}
+import recursion from '@/entities/rubric/lib/recursion';
 
 const useRow = {
   computed: {
@@ -23,8 +17,8 @@ const useRow = {
       return text;
     },
     countSum() {
-      const subrubricsCountSum = this.rubric.children.reduce(flat, 0);
-      const results = subrubricsCountSum + this.rubric.count;
+      const subrubricsSum = this.rubric.children.reduce(recursion.sumCountFields, 0);
+      const results = subrubricsSum + this.rubric.count;
       return results;
     },
     link() {
