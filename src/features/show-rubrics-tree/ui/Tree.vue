@@ -8,7 +8,7 @@
         РУБРИКИ
       </h3>
       <div class="header__icon_arrow">
-        <v-icon icon="keyboard_arrow_down" />
+        <VIcon icon="keyboard_arrow_down" />
       </div>
     </div>
     <div
@@ -16,7 +16,7 @@
       class="tree__list"
     >
       <div class="list__panel">
-        <v-checkbox
+        <VCheckbox
           label="Отображать пустые рубрики"
           class="mt-2"
           density="compacy"
@@ -29,7 +29,7 @@
         v-if="isLoading"
         class="list__preloader"
       >
-        <v-progress-circular
+        <VProgressCircular
           size="50"
           width="8"
           indeterminate

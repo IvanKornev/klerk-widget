@@ -2,7 +2,7 @@
   <Fragment>
     <div :class="rootCss">
       <div class="row__cell">
-        <v-checkbox
+        <VCheckbox
           :model-value="active"
           class="mt-2"
           density="compacy"
@@ -16,24 +16,21 @@
                 :href="link"
                 target="_blank"
               >
-                <v-icon icon="link" />
+                <VIcon icon="link" />
               </a>
             </p>
           </template>
-        </v-checkbox>
+        </VCheckbox>
       </div>
       <div
         v-if="withArrow"
         @click="$emit('arrow-click', rubric)"
         class="row__icon_arrow"
       >
-        <v-icon icon="keyboard_arrow_down" />
+        <VIcon icon="keyboard_arrow_down" />
       </div>
     </div>
-    <div
-      v-if="rubric.children && rubric.children.length > 0 && openedRubricsIds.includes(rubric.id)"
-      class="row__list_children"
-    >
+    <div v-if="childrenAreVisible(rubric)" class="row__list_children">
       <RubricRow
         v-for="subrubric in rubric.children"
         :key="subrubric.id"

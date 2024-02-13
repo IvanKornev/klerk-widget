@@ -31,6 +31,10 @@ const useRow = {
     emitCheckedRubricsChanges(...args) {
       this.$emit('checked-rubrics-change', ...args);
     },
+    childrenAreVisible(rubric) {
+      return rubric.children && rubric.children.length > 0 &&
+        this.openedRubricsIds.includes(rubric.id);
+    },
     hasChildren(subrubric) {
       return subrubric.children && subrubric.children.length > 0;
     },
