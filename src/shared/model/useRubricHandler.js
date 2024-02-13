@@ -1,11 +1,11 @@
 const useRubricHandler = {
   methods: {
-    handleRubric(subrubric) {
+    handleRubric(item = {}) {
       let actionName = 'rubric-adding';
-      if (this.checkedRubrics[subrubric.id]) {
+      if (this.checkedRubrics[item.id] >= 0) {
         actionName = 'rubric-removing';
       }
-      this.$emit('checked-rubrics-change', subrubric, actionName);
+      this.$emit('checked-rubrics-change', item, actionName);
     },
   },
 };

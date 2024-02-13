@@ -48,7 +48,7 @@
             @arrow-click="toggleRubricVisibility"
             @checkbox-click="handleRubric(rubric)"
             @checked-rubrics-change="emitCheckedRubricsChanges"
-            :active="!!checkedRubrics[rubric.id]"
+            :active="!!(checkedRubrics[rubric.id] >= 0)"
             :is-open="openedRubricsIds.includes(rubric.id)"
             :with-arrow="rubric?.children?.length > 0"
             with-count-sum

@@ -11,6 +11,7 @@
         >
           <template #label>
             <p class="cell__text">
+              {{ active }}
               {{ cellText }}
               <a
                 :href="link"
@@ -43,7 +44,7 @@
         :with-arrow="hasChildren(subrubric)"
         :with-count-sum="hasChildren(subrubric)"
         :is-open="openedRubricsIds.includes(subrubric.id)"
-        :active="!!checkedRubrics[subrubric.id]"
+        :active="!!(checkedRubrics[subrubric.id] >= 0)"
         @checked-rubrics-change="emitCheckedRubricsChanges"
         @arrow-click="$emit('arrow-click', subrubric)"
         @checkbox-click="handleRubric(subrubric)"
