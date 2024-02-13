@@ -17,7 +17,7 @@ const useTreeLoader = {
   methods: {
     async loadRubricsTree(withEmptyRubrics = true) {
       this.isLoading = true;
-      await this.$api.rubrics.getTree(withEmptyRubrics).then((results) => {
+      await this.$api.rubrics.getMockedTree(withEmptyRubrics).then((results) => {
         this.rubricsTree = results;
         this.isLoading = false;
       });
