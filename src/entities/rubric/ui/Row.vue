@@ -11,7 +11,6 @@
         >
           <template #label>
             <p class="cell__text">
-              {{ active }}
               {{ cellText }}
               <a
                 :href="link"

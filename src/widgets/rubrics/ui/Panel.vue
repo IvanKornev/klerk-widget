@@ -1,6 +1,5 @@
 <template>
   <main class="page">
-    <p>{{ JSON.stringify(checkedRubrics) }}</p>
     <RubricSumTitle :checked-rubrics="checkedRubrics" />
     <section class="page__tree">
       <RubricsTree
