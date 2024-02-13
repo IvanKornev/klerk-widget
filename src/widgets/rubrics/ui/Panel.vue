@@ -1,11 +1,7 @@
 <template>
   <main class="page">
     <p>{{ JSON.stringify(checkedRubrics) }}</p>
-    <RubricSumTitle
-      :active-subrubrics-counts="activeSubrubricsCounts"
-      :rubrics-tree="rubricsTree"
-      :checked-rubrics="checkedRubrics"
-    />
+    <RubricSumTitle :checked-rubrics="checkedRubrics" />
     <section class="page__tree">
       <RubricsTree
         :list="rubricsTree"
