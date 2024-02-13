@@ -1,7 +1,3 @@
-import checkboxesHelper from '@/widgets/rubrics/lib/checkboxesHelper';
-
-const { rubric } = checkboxesHelper;
-
 const useRubricsCheckboxes = {
   data() {
     return {
@@ -10,13 +6,17 @@ const useRubricsCheckboxes = {
     };
   },
   methods: {
-    changeCheckedRubrics(payload, actionName) {
+    changeCheckedRubrics(rubric, actionName) {
       const POSSIBLE_ACTIONS = {
-        'rubric-adding': rubric.add,
-        'rubric-removing': rubric.remove,
+        'rubric-adding': (value) => {
+          this.checkedRubrics[value.id] = value.count;
+        },
+        'rubric-removing': (value) => {
+          delete this.checkedRubrics[value.id];
+        },
       };
       const actionCallback = POSSIBLE_ACTIONS[actionName];
-      actionCallback.bind(this)(payload);
+      actionCallback(rubric);
     },
   },
 };
