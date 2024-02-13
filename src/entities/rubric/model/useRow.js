@@ -1,3 +1,11 @@
+function recursivelySumCounts(acc, rubric) {
+  if (rubric.children && rubric.children.length > 0) {
+    return rubric.children.reduce(flat, acc);
+  }
+  acc += rubric.count;
+  return acc;
+}
+
 const useRow = {
   computed: {
     rootCss() {
@@ -15,10 +23,8 @@ const useRow = {
       return text;
     },
     countSum() {
-      const subrubricsCountSum = this.rubric.children.reduce((acc, item) => (
-        acc += item.count
-      ), 0);
-      const results = subrubricsCountSum + this.rubric.count;
+      const subrubricsSum = this.rubric.children.reduce(recursivelySumCounts, 0);
+      const results = subrubricsSum + this.rubric.count;
       return results;
     },
     link() {
