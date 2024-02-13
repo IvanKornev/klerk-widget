@@ -42,7 +42,7 @@
         :is-open="openedRubricsIds.includes(subrubric.id)"
         :active="!!(checkedRubrics[subrubric.id] >= 0)"
         @checked-rubrics-change="emitCheckedRubricsChanges"
-        @arrow-click="$emit('arrow-click', subrubric)"
+        @arrow-click="openSubrubric"
         @checkbox-click="handleRubric(subrubric)"
       />
     </div>
