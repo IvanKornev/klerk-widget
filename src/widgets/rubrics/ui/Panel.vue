@@ -28,7 +28,6 @@ export default {
   watch: {
     isLoading() {
       this.checkedRubrics = {};
-      this.activeSubrubricsCounts = {};
     },
   },
 };

@@ -2,7 +2,6 @@ const useRubricsCheckboxes = {
   data() {
     return {
       checkedRubrics: {},
-      activeSubrubricsCounts: {},
     };
   },
   methods: {
