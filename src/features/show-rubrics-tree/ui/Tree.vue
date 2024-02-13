@@ -12,7 +12,7 @@
       </div>
     </div>
     <div
-      v-if="treeIsOpen"
+      v-show="treeIsOpen"
       class="tree__list"
     >
       <div class="list__panel">
