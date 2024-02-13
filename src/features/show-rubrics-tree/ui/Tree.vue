@@ -45,10 +45,10 @@
             :rubric="rubric"
             :checked-rubrics="checkedRubrics"
             :opened-rubrics-ids="openedRubricsIds"
-            @checkbox-click="handleRubric(rubric)"
             @arrow-click="toggleRubricVisibility"
+            @checkbox-click="handleRubric(rubric)"
             @checked-rubrics-change="emitCheckedRubricsChanges"
-            :active="rubricWasAdded(rubric)"
+            :active="!!checkedRubrics[rubric.id]"
             :is-open="openedRubricsIds.includes(rubric.id)"
             :with-arrow="rubric?.children?.length > 0"
             with-count-sum
@@ -60,14 +60,15 @@
 </template>
 
 <script>
-import { useVisibilityToggle, useRubricsHandler } from '@/features/show-rubrics-tree/model';
+import { useRubricHandler } from '@/shared/model';
+import { useVisibilityToggle } from '@/features/show-rubrics-tree/model';
 import { RubricRow } from '@/entities/rubric';
 export default {
   emits: ['empty-rubrics-toggle', 'checked-rubrics-change'],
   components: {
     RubricRow,
   },
-  mixins: [useVisibilityToggle, useRubricsHandler],
+  mixins: [useRubricHandler, useVisibilityToggle],
   props: {
     list: {
       type: Array,

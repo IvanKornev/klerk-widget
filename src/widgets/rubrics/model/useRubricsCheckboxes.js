@@ -1,6 +1,6 @@
 import checkboxesHelper from '@/widgets/rubrics/lib/checkboxesHelper';
 
-const { subrubric, rubric } = checkboxesHelper;
+const { rubric } = checkboxesHelper;
 
 const useRubricsCheckboxes = {
   data() {
@@ -12,8 +12,6 @@ const useRubricsCheckboxes = {
   methods: {
     changeCheckedRubrics(payload, actionName) {
       const POSSIBLE_ACTIONS = {
-        'subrubric-adding': subrubric.add,
-        'subrubric-removing': subrubric.remove,
         'rubric-adding': rubric.add,
         'rubric-removing': rubric.remove,
       };

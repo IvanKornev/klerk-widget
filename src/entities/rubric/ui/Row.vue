@@ -43,21 +43,22 @@
         :with-arrow="hasChildren(subrubric)"
         :with-count-sum="hasChildren(subrubric)"
         :is-open="openedRubricsIds.includes(subrubric.id)"
-        :active="subrubricWasAdded(rubric, subrubric)"
+        :active="!!checkedRubrics[subrubric.id]"
         @checked-rubrics-change="emitCheckedRubricsChanges"
         @arrow-click="$emit('arrow-click', subrubric)"
-        @checkbox-click="handleSubrubric(rubric, subrubric)"
+        @checkbox-click="handleRubric(subrubric)"
       />
     </div>
   </Fragment>
 </template>
 
 <script>
-import { useRow, useSubrubricsHandler } from '@/entities/rubric/model';
+import { useRubricHandler } from '@/shared/model';
+import { useRow } from '@/entities/rubric/model';
 export default {
   name: 'RubricRow',
   emits: ['arrow-click', 'checkbox-click', 'checked-rubrics-change'],
-  mixins: [useRow, useSubrubricsHandler],
+  mixins: [useRow, useRubricHandler],
   props: {
     openedRubricsIds: {
       type: Array,
