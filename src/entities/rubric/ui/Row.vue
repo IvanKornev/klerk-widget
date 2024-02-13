@@ -1,42 +1,78 @@
 <template>
-  <div :class="rootCss">
-    <div class="row__cell">
-      <v-checkbox
-        :model-value="active"
-        class="mt-2"
-        density="compacy"
-        hide-details
-        @click="handleClick('checkbox')"
+  <Fragment>
+    <div :class="rootCss">
+      <div class="row__cell">
+        <v-checkbox
+          :model-value="active"
+          class="mt-2"
+          density="compacy"
+          hide-details
+          @click="$emit('checkbox-click', rubric)"
+        >
+          <template #label>
+            <p class="cell__text">
+              {{ active }}
+              {{ cellText }}
+              <a
+                :href="link"
+                target="_blank"
+              >
+                <v-icon icon="link" />
+              </a>
+            </p>
+          </template>
+        </v-checkbox>
+      </div>
+      <div
+        v-if="withArrow"
+        @click="$emit('arrow-click', rubric)"
+        class="row__icon_arrow"
       >
-        <template #label>
-          <p class="cell__text">
-            {{ cellText }}
-            <a
-              :href="link"
-              target="_blank"
-            >
-              <v-icon icon="link" />
-            </a>
-          </p>
-        </template>
-      </v-checkbox>
+        <v-icon icon="keyboard_arrow_down" />
+      </div>
     </div>
     <div
-      v-if="withArrow"
-      @click="handleClick('arrow')"
-      class="row__icon_arrow"
+      v-if="rubric.children && rubric.children.length > 0 && openedRubricsIds.includes(rubric.id)"
+      class="row__list_children"
     >
-      <v-icon icon="keyboard_arrow_down" />
+      <RubricRow
+        v-for="subrubric in rubric.children"
+        :key="subrubric.id"
+        :opened-rubrics-ids="openedRubricsIds"
+        :checked-rubrics="checkedRubrics"
+        :rubric="subrubric"
+        :with-arrow="hasChildren(subrubric)"
+        :with-count-sum="hasChildren(subrubric)"
+        :is-open="openedRubricsIds.includes(subrubric.id)"
+        :active="!!(checkedRubrics[subrubric.id] >= 0)"
+        @checked-rubrics-change="emitCheckedRubricsChanges"
+        @arrow-click="$emit('arrow-click', subrubric)"
+        @checkbox-click="handleRubric(subrubric)"
+      />
     </div>
-  </div>
+  </Fragment>
 </template>
 
 <script>
+import { useRubricHandler } from '@/shared/model';
 import { useRow } from '@/entities/rubric/model';
 export default {
-  emits: ['arrow-click', 'checkbox-click'],
-  mixins: [useRow],
+  name: 'RubricRow',
+  emits: ['arrow-click', 'checkbox-click', 'checked-rubrics-change'],
+  mixins: [useRow, useRubricHandler],
   props: {
+    openedRubricsIds: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+    checkedRubrics: {
+      type: Object,
+      defualt() {
+        return {};
+      },
+    },
     rubric: {
       type: Object,
       default() {
@@ -80,6 +116,10 @@ export default {
   &__icon_arrow {
     cursor: pointer;
     transition: transform 0.2s;
+  }
+  &__list_children {
+    animation: appearing-animation 0.3s;
+    padding-left: 16px;
   }
 }
 </style>

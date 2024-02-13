@@ -1,24 +1,21 @@
-import checkboxesHelper from '@/widgets/rubrics/lib/checkboxesHelper';
-
-const { subrubric, rubric } = checkboxesHelper;
-
 const useRubricsCheckboxes = {
   data() {
     return {
       checkedRubrics: {},
-      activeSubrubricsCounts: {},
     };
   },
   methods: {
-    changeCheckedRubrics(payload, actionName) {
+    changeCheckedRubrics(rubric, actionName) {
       const POSSIBLE_ACTIONS = {
-        'subrubric-adding': subrubric.add,
-        'subrubric-removing': subrubric.remove,
-        'rubric-adding': rubric.add,
-        'rubric-removing': rubric.remove,
+        'rubric-adding': (value) => {
+          this.checkedRubrics[value.id] = value.count;
+        },
+        'rubric-removing': (value) => {
+          delete this.checkedRubrics[value.id];
+        },
       };
       const actionCallback = POSSIBLE_ACTIONS[actionName];
-      actionCallback.bind(this)(payload);
+      actionCallback(rubric);
     },
   },
 };

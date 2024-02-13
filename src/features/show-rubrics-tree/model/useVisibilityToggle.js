@@ -2,22 +2,32 @@ const useVisibilityToggle = {
   data() {
     return {
       treeIsOpen: true,
-      openedRubricId: null,
+      openedRubricsIds: [],
     };
+  },
+  watch: {
+    isLoading() {
+      this.openedRubricsIds = [];
+    },
   },
   methods: {
     toggleTreeVisibility() {
-      if (!this.disabled) {
+      if (!this.isLoading) {
         this.treeIsOpen = !this.treeIsOpen;
       }
     },
     toggleRubricVisibility(item = {}) {
-      if (this.disabled) {
+      if (this.isLoading) {
         return;
       }
-      const { id } = item;
-      const updatedValue = this.openedRubricId === id ? null : id;
-      this.openedRubricId = updatedValue;
+      const withoutDublicates = this.openedRubricsIds.filter(
+        (id) => id !== item.id
+      );
+      if (withoutDublicates.length !== this.openedRubricsIds.length) {
+        this.openedRubricsIds = withoutDublicates;
+        return;
+      }
+      this.openedRubricsIds.push(item.id);
     },
   },
 };

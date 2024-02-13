@@ -11,7 +11,10 @@
         <v-icon icon="keyboard_arrow_down" />
       </div>
     </div>
-    <div v-if="treeIsOpen" class="tree__list">
+    <div
+      v-if="treeIsOpen"
+      class="tree__list"
+    >
       <div class="list__panel">
         <v-checkbox
           label="Отображать пустые рубрики"
@@ -22,7 +25,10 @@
           hide-details
         />
       </div>
-      <div v-if="isLoading" class="list__preloader">
+      <div
+        v-if="isLoading"
+        class="list__preloader"
+      >
         <v-progress-circular
           size="50"
           width="8"
@@ -37,22 +43,16 @@
           <RubricRow
             class="item__row"
             :rubric="rubric"
+            :checked-rubrics="checkedRubrics"
+            :opened-rubrics-ids="openedRubricsIds"
+            @arrow-click="toggleRubricVisibility"
             @checkbox-click="handleRubric(rubric)"
-            @arrow-click="toggleRubricVisibility(rubric)"
-            :active="rubricWasAdded(rubric)"
-            :is-open="openedRubricId === rubric.id"
-            :with-arrow="rubric.children.length > 0"
+            @checked-rubrics-change="emitCheckedRubricsChanges"
+            :active="!!(checkedRubrics[rubric.id] >= 0)"
+            :is-open="openedRubricsIds.includes(rubric.id)"
+            :with-arrow="rubric?.children?.length > 0"
             with-count-sum
           />
-          <div v-if="openedRubricId === rubric.id" class="item__rows">
-            <RubricRow
-              v-for="subrubric in rubric.children"
-              :key="subrubric.id"
-              :rubric="subrubric"
-              @checkbox-click="handleSubrubric(rubric, subrubric)"
-              :active="subrubricWasAdded(rubric, subrubric)"
-            />
-          </div>
         </div>
       </div>
     </div>
@@ -60,18 +60,15 @@
 </template>
 
 <script>
+import { useRubricHandler } from '@/shared/model';
+import { useVisibilityToggle } from '@/features/show-rubrics-tree/model';
 import { RubricRow } from '@/entities/rubric';
-import {
-  useVisibilityToggle,
-  useSubrubricsHandler,
-  useRubricsHandler,
-} from '@/features/show-rubrics-tree/model';
 export default {
   emits: ['empty-rubrics-toggle', 'checked-rubrics-change'],
   components: {
     RubricRow,
   },
-  mixins: [useVisibilityToggle, useSubrubricsHandler, useRubricsHandler],
+  mixins: [useRubricHandler, useVisibilityToggle],
   props: {
     list: {
       type: Array,
@@ -100,6 +97,11 @@ export default {
         'tree_is-loading': this.isLoading,
         'tree_is-open': this.treeIsOpen,
       }];
+    },
+  },
+  methods: {
+    emitCheckedRubricsChanges(...args) {
+      this.$emit('checked-rubrics-change', ...args);
     },
   },
 };
@@ -140,20 +142,6 @@ export default {
 .header__icon_arrow {
   transition: transform 0.2s;
 }
-@keyframes appearing-animation {
-  0% {
-    opacity: 0;
-    transform: translateY(5vh);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.item__rows {
-  padding-left: 16px;
-}
-.item__rows,
 .item__row {
   animation: appearing-animation 0.3s;
 }

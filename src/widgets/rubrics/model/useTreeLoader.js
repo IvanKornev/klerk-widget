@@ -2,7 +2,7 @@ const useTreeLoader = {
   data() {
     return {
       rubricsTree: [],
-      withEmptyRubrics: false,
+      withEmptyRubrics: true,
       isLoading: true,
     };
   },
@@ -15,7 +15,7 @@ const useTreeLoader = {
     await this.loadRubricsTree();
   },
   methods: {
-    async loadRubricsTree(withEmptyRubrics = false) {
+    async loadRubricsTree(withEmptyRubrics = true) {
       this.isLoading = true;
       await this.$api.rubrics.getTree(withEmptyRubrics).then((results) => {
         this.rubricsTree = results;

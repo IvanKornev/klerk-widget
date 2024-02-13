@@ -1,10 +1,7 @@
 <template>
   <main class="page">
-    <RubricSumTitle
-      :active-subrubrics-counts="activeSubrubricsCounts"
-      :rubrics-tree="rubricsTree"
-      :checked-rubrics="checkedRubrics"
-    />
+    <p>{{ JSON.stringify(checkedRubrics) }}</p>
+    <RubricSumTitle :checked-rubrics="checkedRubrics" />
     <section class="page__tree">
       <RubricsTree
         :list="rubricsTree"
@@ -31,7 +28,6 @@ export default {
   watch: {
     isLoading() {
       this.checkedRubrics = {};
-      this.activeSubrubricsCounts = {};
     },
   },
 };

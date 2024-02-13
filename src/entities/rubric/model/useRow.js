@@ -28,10 +28,11 @@ const useRow = {
     },
   },
   methods: {
-    handleClick(type = 'arrow') {
-      if (!this.disabled) {
-        this.$emit(`${type}-click`);
-      }
+    emitCheckedRubricsChanges(...args) {
+      this.$emit('checked-rubrics-change', ...args);
+    },
+    hasChildren(subrubric) {
+      return subrubric.children && subrubric.children.length > 0;
     },
   },
 };
