@@ -4,23 +4,15 @@
   </h1>
 </template>
 
-<script>
-export default {
-  props: {
-    checkedRubrics: {
-      type: Object,
-      default() {
-        return {};
-      },
-    },
-  },
-  computed: {
-    allCountsSum() {
-      const onlyCounts = Object.values(this.checkedRubrics);
-      return onlyCounts.reduce((acc, count) => (
-        acc += count
-      ), 0);
-    },
-  },
-};
+<script lang="ts" setup>
+import { computed } from 'vue';
+
+const props = defineProps<{
+  checkedRubrics: Record<number, number>,
+}>();
+
+const allCountsSum = computed(() => {
+  const onlyCounts = Object.values(props.checkedRubrics);
+  return onlyCounts.reduce((acc, count) => acc += count, 0);
+});
 </script>
