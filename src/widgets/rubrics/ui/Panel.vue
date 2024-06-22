@@ -15,12 +15,15 @@
 </template>
 
 <script lang="ts" setup>
+import { watch } from 'vue';
 import { useRubricsCheckboxes, useTreeLoader } from '@/widgets/rubrics/model';
 import { RubricsTree } from '@/features/show-rubrics-tree';
 import { RubricSumTitle } from '@/entities/rubric';
 
 const { checkedRubrics, changeCheckedRubrics } = useRubricsCheckboxes();
-const { rubricsTree, isLoading, withEmptyRubrics } = useTreeLoader(checkedRubrics);
+const { rubricsTree, isLoading, withEmptyRubrics } = useTreeLoader();
+
+watch(isLoading, () => (checkedRubrics.value = {}));
 </script>
 
 <style lang="scss" scoped>

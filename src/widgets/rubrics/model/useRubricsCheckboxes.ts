@@ -1,8 +1,8 @@
 import { ref } from 'vue';
-import type { IRubric, TCheckedRubric, TActionName } from './types';
+import type { IRubric, TActionName } from './types';
 
 const useRubricsCheckboxes = () => {
-  const checkedRubrics = ref<TCheckedRubric>({});
+  const checkedRubrics = ref<Record<number, number>>({});
 
   const changeCheckedRubrics = (item: IRubric, actionName: TActionName) => {
     const POSSIBLE_ACTIONS = {

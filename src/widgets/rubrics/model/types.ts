@@ -6,6 +6,4 @@ export interface IRubric {
   children: IRubric[],
 }
 
-export type TCheckedRubric = Record<number, number>;
-
 export type TActionName = 'rubric-adding' | 'rubric-removing';
