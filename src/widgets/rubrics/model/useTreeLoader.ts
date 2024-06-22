@@ -10,10 +10,9 @@ const useTreeLoader = () => {
 
   const loadRubricsTree = async (withEmptyRubrics = true) => {
     isLoading.value = true;
-    await globals?.$api.rubrics.getMockedTree(withEmptyRubrics).then((results: any) => {
-      rubricsTree.value = results;
-      isLoading.value = false;
-    });
+    const results: IRubric[] = await globals?.$api.rubrics.getMockedTree(withEmptyRubrics);
+    rubricsTree.value = results;
+    isLoading.value = false;
   };
 
   onBeforeMount(loadRubricsTree);
