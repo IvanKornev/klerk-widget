@@ -1,7 +1,8 @@
+import type { App } from 'vue';
 import { rubrics } from '@/app/api';
 
 export default {
-  install: (app) => {
+  install: (app: App) => {
     app.config.globalProperties.$api = {
       rubrics,
     };
