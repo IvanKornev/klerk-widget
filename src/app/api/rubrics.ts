@@ -1,4 +1,5 @@
 import mocks from './_mocks';
+import { wait } from '@/shared/lib/mocking';
 
 const BASE_URL = 'https://www.klerk.ru/yindex.php/v3/event/rubrics';
 
@@ -12,14 +13,11 @@ const getTree = async(withEmptyRubrics = true): Promise<IRubric[]> => {
   return results;
 };
 
-const getMockedTree = async(withEmptyRubrics = true): Promise<IRubric[]> => (
-  new Promise((resolve) => {
-    setTimeout(() => {
-      const key = withEmptyRubrics.toString();
-      resolve(mocks.rubricsTree[key]);
-    }, 500);
-  })
-);
+const getMockedTree = async(withEmptyRubrics = true): Promise<IRubric[]> => {
+  await wait(500);
+  const key = withEmptyRubrics.toString();
+  return mocks.rubricsTree[key];
+};
 
 const rubrics = {
   getTree,
