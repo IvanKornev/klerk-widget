@@ -1,6 +1,9 @@
 <template>
   <Fragment>
-    <div :class="rootCss">
+    <div
+      class="row"
+      :class="{ 'row_is-open': isOpen }"
+    >
       <div class="row__cell">
         <VCheckbox
           :model-value="active"
@@ -13,7 +16,7 @@
             <p class="cell__text">
               {{ cellText }}
               <a
-                :href="link"
+                :href="`https://klerk.ru${props.rubric.url}`"
                 target="_blank"
               >
                 <VIcon icon="link" />
@@ -52,55 +55,79 @@
   </Fragment>
 </template>
 
-<script>
-import { useRubricHandler } from '@/shared/model';
-import { useRow } from '@/entities/rubric/model';
-export default {
-  name: 'RubricRow',
-  emits: ['arrow-click', 'checkbox-click', 'checked-rubrics-change'],
-  mixins: [useRow, useRubricHandler],
-  props: {
-    openedRubricsIds: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
-    checkedRubrics: {
-      type: Object,
-      default() {
-        return {};
-      },
-    },
-    rubric: {
-      type: Object,
-      default() {
-        return {
-          id: 100,
-          title: 'Бухгалтерия',
-          url: '/rubricator/buhgalterija/',
-          children: [],
-        };
-      },
-    },
-    isOpen: {
-      type: Boolean,
-      default: false,
-    },
-    withArrow: {
-      type: Boolean,
-      default: false,
-    },
-    withCountSum: {
-      type: Boolean,
-      default: false,
-    },
-    active: {
-      type: Boolean,
-      default: false,
-    },
-  },
+<script lang="ts" setup>
+import { computed } from 'vue';
+import { RubricRow } from '@/entities/rubric';
+import recursion from '@/entities/rubric/lib/recursion';
+
+interface IRubric {
+  id: number,
+  title: string,
+  url: string,
+  count: number,
+  children?: IRubric[],
+}
+
+type TRubricAction = 'rubric-adding' | 'rubric-removing';
+
+interface IProps {
+  openedRubricsIds?: number[],
+  checkedRubrics?: Record<number, number>,
+  isOpen?: boolean,
+  withArrow?: boolean,
+  withCountSum?: boolean,
+  active?: boolean,
+  rubric: IRubric,
+}
+
+const props = withDefaults(defineProps<IProps>(), {
+  openedRubricsIds: () => [],
+  checkedRubrics: () => ({}),
+  isOpen: false,
+  withArrow: false,
+  withCountSum: false,
+  active: false,
+});
+
+const emit = defineEmits(['checked-rubrics-change', 'arrow-click', 'checkbox-click']);
+
+const countSum = computed(() => {
+  const subrubricsSum = props.rubric.children.reduce(recursion.sumCountFields, 0);
+  const results = subrubricsSum + props.rubric.count;
+  return results;
+});
+
+const cellText = computed(() => {
+  const { title, count } = props.rubric;
+  let text = `${title} (count: ${count})`;
+  if (props.withCountSum) {
+    const countSumLine = `сумма count-ов: ${countSum.value}`;
+    text = `${title} (count: ${count}; ${countSumLine})`;
+  }
+  return text;
+});
+
+const handleRubric = (item: IRubric) => {
+  let actionName: TRubricAction = 'rubric-adding';
+  if (props.checkedRubrics[item.id] >= 0) actionName = 'rubric-removing';
+  emit('checked-rubrics-change', item, actionName);
 };
+
+const emitCheckedRubricsChanges = (...args: [IRubric, TRubricAction]) => {
+  emit('checked-rubrics-change', ...args);
+};
+
+const openSubrubric = (subrubric: IRubric) => {
+  emit('arrow-click', subrubric);
+};
+
+const childrenAreVisible = (rubric: IRubric) => (
+  rubric.children && rubric.children.length > 0 && props.openedRubricsIds.includes(rubric.id)
+);
+
+const hasChildren = (subrubric: IRubric) => (
+  subrubric.children && subrubric.children.length > 0
+);
 </script>
 
 <style lang="scss" scoped>

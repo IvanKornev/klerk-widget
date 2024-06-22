@@ -5,3 +5,5 @@ interface IRubric {
   count: number,
   children?: IRubric[],
 }
+
+type TRubricAction = 'rubric-adding' | 'rubric-removing';
