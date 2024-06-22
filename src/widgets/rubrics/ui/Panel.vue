@@ -25,8 +25,9 @@ export default {
   },
   mixins: [useRubricsCheckboxes],
   setup() {
-    const { rubricsTree, isLoading, withEmptyRubrics } = useTreeLoader(this.$api);
-    return { rubricsTree, isLoading, withEmptyRubrics };
+    const { rubricsTree, isLoading, withEmptyRubrics } = useTreeLoader();
+    const { checkedRubrics, changeCheckedRubrics } = useRubricsCheckboxes();
+    return { rubricsTree, isLoading, withEmptyRubrics, checkedRubrics, changeCheckedRubrics };
   },
   watch: {
     isLoading() {
