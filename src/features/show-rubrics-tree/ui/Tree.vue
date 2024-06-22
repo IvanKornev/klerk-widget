@@ -68,7 +68,7 @@ export default {
   components: {
     RubricRow,
   },
-  mixins: [useRubricHandler, useVisibilityToggle],
+  mixins: [useRubricHandler],
   props: {
     list: {
       type: Array,
@@ -90,6 +90,10 @@ export default {
       type: Boolean,
       default: false,
     },
+  },
+  setup(props) {
+    const { treeIsOpen, openedRubricsIds, toggleTreeVisibility, toggleRubricVisibility } = useVisibilityToggle(props);
+    return { treeIsOpen, openedRubricsIds, toggleTreeVisibility, toggleRubricVisibility };
   },
   computed: {
     rootCss() {
