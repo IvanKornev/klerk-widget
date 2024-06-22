@@ -1,17 +1,18 @@
 module.exports = {
     root: true,
-    env: {
-      browser: true,
-      node: true,
-    },
+    parser: 'vue-eslint-parser',
     parserOptions: {
-      parser: '@babel/eslint-parser',
-      requireConfigFile: false,
+      parser: '@typescript-eslint/parser',
+    },
+    env: {
+      'vue/setup-compiler-macros': true,
     },
     extends: [
-      'plugin:vue/vue3-essential',
       'plugin:vue/strongly-recommended',
+      'eslint:recommended',
+      '@vue/typescript/recommended',
     ],
+    plugins: ['@typescript-eslint'],
     rules: {
       'vue/multi-word-component-names': 'off',
       'vue/require-toggle-inside-transition': 'off',

@@ -30,7 +30,10 @@
         <VIcon icon="keyboard_arrow_down" />
       </div>
     </div>
-    <div v-if="childrenAreVisible(rubric)" class="row__list_children">
+    <div
+      v-if="childrenAreVisible(rubric)"
+      class="row__list_children"
+    >
       <RubricRow
         v-for="subrubric in rubric.children"
         :key="subrubric.id"

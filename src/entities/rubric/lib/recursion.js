@@ -4,7 +4,7 @@ function sumCountFields(acc, rubric) {
   }
   acc += rubric.count;
   return acc;
-};
+}
 
 const recursion = {
   sumCountFields,
