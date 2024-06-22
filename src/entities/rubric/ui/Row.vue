@@ -48,7 +48,7 @@
         :is-open="openedRubricsIds.includes(subrubric.id)"
         :active="!!(checkedRubrics[subrubric.id] >= 0)"
         @checked-rubrics-change="emitCheckedRubricsChanges"
-        @arrow-click="openSubrubric"
+        @arrow-click="(item: IRubric) => emit('arrow-click', item)"
         @checkbox-click="handleRubric(subrubric)"
       />
     </div>
@@ -56,9 +56,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { RubricRow } from '@/entities/rubric';
-import recursion from '@/entities/rubric/lib/recursion';
+import { useRowCell } from '@/entities/rubric/model';
 
 interface IRubric {
   id: number,
@@ -91,21 +90,7 @@ const props = withDefaults(defineProps<IProps>(), {
 
 const emit = defineEmits(['checked-rubrics-change', 'arrow-click', 'checkbox-click']);
 
-const countSum = computed(() => {
-  const subrubricsSum = props.rubric.children.reduce(recursion.sumCountFields, 0);
-  const results = subrubricsSum + props.rubric.count;
-  return results;
-});
-
-const cellText = computed(() => {
-  const { title, count } = props.rubric;
-  let text = `${title} (count: ${count})`;
-  if (props.withCountSum) {
-    const countSumLine = `сумма count-ов: ${countSum.value}`;
-    text = `${title} (count: ${count}; ${countSumLine})`;
-  }
-  return text;
-});
+const { cellText } = useRowCell(props);
 
 const handleRubric = (item: IRubric) => {
   let actionName: TRubricAction = 'rubric-adding';
@@ -115,10 +100,6 @@ const handleRubric = (item: IRubric) => {
 
 const emitCheckedRubricsChanges = (...args: [IRubric, TRubricAction]) => {
   emit('checked-rubrics-change', ...args);
-};
-
-const openSubrubric = (subrubric: IRubric) => {
-  emit('arrow-click', subrubric);
 };
 
 const childrenAreVisible = (rubric: IRubric) => (
