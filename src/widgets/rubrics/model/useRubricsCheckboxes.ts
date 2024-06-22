@@ -1,5 +1,6 @@
 import { ref } from 'vue';
-import type { IRubric, TActionName } from './types';
+
+type TActionName = 'rubric-adding' | 'rubric-removing';
 
 const useRubricsCheckboxes = () => {
   const checkedRubrics = ref<Record<number, number>>({});

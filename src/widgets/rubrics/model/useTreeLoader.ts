@@ -1,5 +1,4 @@
 import { ref, watch, onBeforeMount, getCurrentInstance } from 'vue';
-import type { IRubric } from './types';
 
 const useTreeLoader = () => {
   const internalInstance = getCurrentInstance();
