@@ -1,8 +1,8 @@
 import { ref, watch, onBeforeMount, getCurrentInstance } from 'vue';
 import type { Ref } from 'vue';
-import type { IRubric } from './types';
+import type { IRubric, TCheckedRubric } from './types';
 
-const useTreeLoader = (checkedRubrics: Ref<Record<number, number>>) => {
+const useTreeLoader = (checkedRubrics: Ref<TCheckedRubric>) => {
   const internalInstance = getCurrentInstance();
   const globals = internalInstance?.appContext.config.globalProperties;
 
