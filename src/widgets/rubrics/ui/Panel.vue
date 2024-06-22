@@ -23,7 +23,11 @@ export default {
     RubricsTree,
     RubricSumTitle,
   },
-  mixins: [useTreeLoader, useRubricsCheckboxes],
+  mixins: [useRubricsCheckboxes],
+  setup() {
+    const { rubricsTree, isLoading, withEmptyRubrics } = useTreeLoader(this.$api);
+    return { rubricsTree, isLoading, withEmptyRubrics };
+  },
   watch: {
     isLoading() {
       this.checkedRubrics = {};
