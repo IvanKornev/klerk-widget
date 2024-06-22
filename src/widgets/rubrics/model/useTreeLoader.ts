@@ -1,7 +1,8 @@
 import { ref, watch, onBeforeMount, getCurrentInstance } from 'vue';
+import type { Ref } from 'vue';
 import type { IRubric } from './types';
 
-const useTreeLoader = () => {
+const useTreeLoader = (checkedRubrics: Ref<Record<number, number>>) => {
   const internalInstance = getCurrentInstance();
   const globals = internalInstance?.appContext.config.globalProperties;
 
@@ -20,6 +21,7 @@ const useTreeLoader = () => {
   onBeforeMount(loadRubricsTree);
 
   watch(withEmptyRubrics, loadRubricsTree);
+  watch(isLoading, () => (checkedRubrics.value = {}));
 
   return {
     rubricsTree,

@@ -14,27 +14,13 @@
   </main>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { useRubricsCheckboxes, useTreeLoader } from '@/widgets/rubrics/model';
 import { RubricsTree } from '@/features/show-rubrics-tree';
 import { RubricSumTitle } from '@/entities/rubric';
-export default {
-  components: {
-    RubricsTree,
-    RubricSumTitle,
-  },
-  mixins: [useRubricsCheckboxes],
-  setup() {
-    const { rubricsTree, isLoading, withEmptyRubrics } = useTreeLoader();
-    const { checkedRubrics, changeCheckedRubrics } = useRubricsCheckboxes();
-    return { rubricsTree, isLoading, withEmptyRubrics, checkedRubrics, changeCheckedRubrics };
-  },
-  watch: {
-    isLoading() {
-      this.checkedRubrics = {};
-    },
-  },
-};
+
+const { checkedRubrics, changeCheckedRubrics } = useRubricsCheckboxes();
+const { rubricsTree, isLoading, withEmptyRubrics } = useTreeLoader(checkedRubrics);
 </script>
 
 <style lang="scss" scoped>
