@@ -1,4 +1,4 @@
-const rubricsTree = {
+const rubricsTree: Record<string, IRubric[]> = {
     true: [
         {
             'id': 100,

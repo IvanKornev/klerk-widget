@@ -1,5 +1,3 @@
 import useRubricHandler from './useRubricHandler';
 
-export {
-  useRubricHandler,
-};
+export { useRubricHandler };

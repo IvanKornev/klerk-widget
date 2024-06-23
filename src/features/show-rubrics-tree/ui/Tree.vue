@@ -1,8 +1,14 @@
 <template>
-  <div :class="rootCss">
+  <div
+    class="tree"
+    :class="{
+      'tree_is-loading': isLoading,
+      'tree_is-open': toggleState.treeIsOpen,
+    }"
+  >
     <div
       class="tree__header"
-      @click="toggleTreeVisibility"
+      @click="toggleState.toggleTreeVisibility"
     >
       <h3 class="header__subtitle">
         РУБРИКИ
@@ -12,14 +18,14 @@
       </div>
     </div>
     <div
-      v-show="treeIsOpen"
+      v-show="toggleState.treeIsOpen"
       class="tree__list"
     >
       <div class="list__panel">
         <VCheckbox
           label="Отображать пустые рубрики"
           class="mt-2"
-          density="compacy"
+          :density="null"
           :model-value="withEmptyRubrics"
           @click="$emit('empty-rubrics-toggle')"
           hide-details
@@ -44,13 +50,13 @@
             class="item__row"
             :rubric="rubric"
             :checked-rubrics="checkedRubrics"
-            :opened-rubrics-ids="openedRubricsIds"
-            @arrow-click="toggleRubricVisibility"
+            :opened-rubrics-ids="toggleState.openedRubricsIds"
+            @arrow-click="toggleState.toggleRubricVisibility"
             @checkbox-click="handleRubric(rubric)"
-            @checked-rubrics-change="emitCheckedRubricsChanges"
+            @checked-rubrics-change="(...args) => $emit('checked-rubrics-change', ...args)"
             :active="!!(checkedRubrics[rubric.id] >= 0)"
-            :is-open="openedRubricsIds.includes(rubric.id)"
-            :with-arrow="rubric?.children?.length > 0"
+            :is-open="toggleState.openedRubricsIds.includes(rubric.id)"
+            :with-arrow="!!rubric?.children?.length"
             with-count-sum
           />
         </div>
@@ -59,52 +65,31 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { reactive } from 'vue';
 import { useRubricHandler } from '@/shared/model';
-import { useVisibilityToggle } from '@/features/show-rubrics-tree/model';
 import { RubricRow } from '@/entities/rubric';
-export default {
-  emits: ['empty-rubrics-toggle', 'checked-rubrics-change'],
-  components: {
-    RubricRow,
-  },
-  mixins: [useRubricHandler, useVisibilityToggle],
-  props: {
-    list: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
-    checkedRubrics: {
-      type: Object,
-      default() {
-        return {};
-      },
-    },
-    isLoading: {
-      type: Boolean,
-      default: true,
-    },
-    withEmptyRubrics: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  computed: {
-    rootCss() {
-      return ['tree', {
-        'tree_is-loading': this.isLoading,
-        'tree_is-open': this.treeIsOpen,
-      }];
-    },
-  },
-  methods: {
-    emitCheckedRubricsChanges(...args) {
-      this.$emit('checked-rubrics-change', ...args);
-    },
-  },
-};
+import { useVisibilityToggle } from '@/features/show-rubrics-tree/model';
+
+interface IProps {
+  list: IRubric[],
+  checkedRubrics: TCheckedRubrics,
+  isLoading?: boolean,
+  withEmptyRubrics?: boolean,
+}
+
+const props = withDefaults(defineProps<IProps>(), {
+  isLoading: false,
+  withEmptyRubrics: false,
+});
+
+const emit = defineEmits<{
+  'checked-rubrics-change': [item: IRubric, action: TRubricAction],
+  'empty-rubrics-toggle': [],
+}>();
+
+const toggleState = reactive(useVisibilityToggle(props));
+const { handleRubric } = useRubricHandler(props, emit);
 </script>
 
 <style lang="scss" scoped>

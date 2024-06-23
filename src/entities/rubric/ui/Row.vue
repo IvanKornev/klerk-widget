@@ -1,11 +1,14 @@
 <template>
-  <Fragment>
-    <div :class="rootCss">
+  <div>
+    <div
+      class="row"
+      :class="{ 'row_is-open': isOpen }"
+    >
       <div class="row__cell">
         <VCheckbox
           :model-value="active"
           class="mt-2"
-          density="compacy"
+          :density="null"
           hide-details
           @click="$emit('checkbox-click', rubric)"
         >
@@ -13,7 +16,7 @@
             <p class="cell__text">
               {{ cellText }}
               <a
-                :href="link"
+                :href="`https://klerk.ru${props.rubric.url}`"
                 target="_blank"
               >
                 <VIcon icon="link" />
@@ -30,7 +33,10 @@
         <VIcon icon="keyboard_arrow_down" />
       </div>
     </div>
-    <div v-if="childrenAreVisible(rubric)" class="row__list_children">
+    <div
+      v-if="rubric.children && rubric.children.length && openedRubricsIds.includes(rubric.id)"
+      class="row__list_children"
+    >
       <RubricRow
         v-for="subrubric in rubric.children"
         :key="subrubric.id"
@@ -41,63 +47,46 @@
         :with-count-sum="hasChildren(subrubric)"
         :is-open="openedRubricsIds.includes(subrubric.id)"
         :active="!!(checkedRubrics[subrubric.id] >= 0)"
-        @checked-rubrics-change="emitCheckedRubricsChanges"
-        @arrow-click="openSubrubric"
+        @checked-rubrics-change="(...args) => $emit('checked-rubrics-change', ...args)"
+        @arrow-click="(item) => $emit('arrow-click', item)"
         @checkbox-click="handleRubric(subrubric)"
       />
     </div>
-  </Fragment>
+  </div>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { useRowCell } from '@/entities/rubric/model';
 import { useRubricHandler } from '@/shared/model';
-import { useRow } from '@/entities/rubric/model';
-export default {
-  name: 'RubricRow',
-  emits: ['arrow-click', 'checkbox-click', 'checked-rubrics-change'],
-  mixins: [useRow, useRubricHandler],
-  props: {
-    openedRubricsIds: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
-    checkedRubrics: {
-      type: Object,
-      default() {
-        return {};
-      },
-    },
-    rubric: {
-      type: Object,
-      default() {
-        return {
-          id: 100,
-          title: 'Бухгалтерия',
-          url: '/rubricator/buhgalterija/',
-          children: [],
-        };
-      },
-    },
-    isOpen: {
-      type: Boolean,
-      default: false,
-    },
-    withArrow: {
-      type: Boolean,
-      default: false,
-    },
-    withCountSum: {
-      type: Boolean,
-      default: false,
-    },
-    active: {
-      type: Boolean,
-      default: false,
-    },
-  },
-};
+import { RubricRow } from '@/entities/rubric';
+
+interface IProps {
+  openedRubricsIds: number[],
+  checkedRubrics: TCheckedRubrics,
+  isOpen?: boolean,
+  withArrow?: boolean,
+  withCountSum?: boolean,
+  active?: boolean,
+  rubric: IRubric,
+}
+
+const props = withDefaults(defineProps<IProps>(), {
+  isOpen: false,
+  withArrow: false,
+  withCountSum: false,
+  active: false,
+});
+
+const emit = defineEmits<{
+  'checked-rubrics-change': [item: IRubric, action: TRubricAction],
+  'checkbox-click': [item: IRubric],
+  'arrow-click': [item: IRubric],
+}>();
+
+const { cellText } = useRowCell(props);
+const { handleRubric } = useRubricHandler(props, emit);
+
+const hasChildren = ({ children }: IRubric) => children && children.length > 0;
 </script>
 
 <style lang="scss" scoped>
