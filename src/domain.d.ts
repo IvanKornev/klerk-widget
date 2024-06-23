@@ -6,9 +6,4 @@ interface IRubric {
   children?: IRubric[],
 }
 
-enum ERubricActions {
-  Adding = 'rubric-adding',
-  Removing = 'rubric-removing',
-};
-
 type TCheckedRubrics = Record<number, number>;

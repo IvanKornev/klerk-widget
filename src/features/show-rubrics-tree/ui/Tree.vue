@@ -63,8 +63,11 @@
 </template>
 
 <script lang="ts" setup>
+import { RUBRIC_ACTIONS } from '@/shared/constants';
 import { RubricRow } from '@/entities/rubric';
 import { useVisibilityToggle } from '@/features/show-rubrics-tree/model';
+
+type TRubricAction = typeof RUBRIC_ACTIONS[keyof typeof RUBRIC_ACTIONS];
 
 interface IProps {
   list: IRubric[],
@@ -79,15 +82,15 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const emit = defineEmits<{
-  'checked-rubrics-change': [item: IRubric, action: ERubricActions],
+  'checked-rubrics-change': [item: IRubric, action: TRubricAction],
   'empty-rubrics-toggle': [],
 }>();
 
 const { treeIsOpen, openedRubricsIds, toggleTreeVisibility, toggleRubricVisibility } = useVisibilityToggle(props);
 
 const handleRubric = (item: IRubric) => {
-  let actionName: ERubricActions = ERubricActions.Adding;
-  if (props.checkedRubrics[item.id] >= 0) actionName = ERubricActions.Removing;
+  let actionName = RUBRIC_ACTIONS.ADDING;
+  if (props.checkedRubrics[item.id] >= 0) actionName = RUBRIC_ACTIONS.REMOVING;
   emit('checked-rubrics-change', item, actionName);
 };
 </script>
