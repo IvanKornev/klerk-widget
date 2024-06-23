@@ -63,6 +63,7 @@
 </template>
 
 <script lang="ts" setup>
+import { RubricRow } from '@/entities/rubric';
 import { useVisibilityToggle } from '@/features/show-rubrics-tree/model';
 
 interface IRubric {
