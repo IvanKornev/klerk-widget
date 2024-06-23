@@ -3,12 +3,12 @@ import { ref } from 'vue';
 const useRubricsCheckboxes = () => {
   const checkedRubrics = ref<TCheckedRubrics>({});
 
-  const changeCheckedRubrics = (item: IRubric, actionName: TRubricAction) => {
+  const changeCheckedRubrics = (item: IRubric, actionName: ERubricActions) => {
     const POSSIBLE_ACTIONS = {
-      'rubric-adding': (value: IRubric) => {
+      [ERubricActions.Adding]: (value: IRubric) => {
         checkedRubrics.value[value.id] = value.count;
       },
-      'rubric-removing': (value: IRubric) => {
+      [ERubricActions.Removing]: (value: IRubric) => {
         delete checkedRubrics.value[value.id];
       },
     };

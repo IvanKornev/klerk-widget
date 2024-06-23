@@ -77,7 +77,7 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const emit = defineEmits<{
-  'checked-rubrics-change': [item: IRubric, action: TRubricAction],
+  'checked-rubrics-change': [item: IRubric, action: ERubricActions],
   'checkbox-click': [item: IRubric],
   'arrow-click': [item: IRubric],
 }>();
@@ -85,8 +85,8 @@ const emit = defineEmits<{
 const { cellText } = useRowCell(props);
 
 const handleRubric = (item: IRubric) => {
-  let actionName: TRubricAction = 'rubric-adding';
-  if (props.checkedRubrics[item.id] >= 0) actionName = 'rubric-removing';
+  let actionName: ERubricActions = ERubricActions.Adding;
+  if (props.checkedRubrics[item.id] >= 0) ERubricActions.Removing;
   emit('checked-rubrics-change', item, actionName);
 };
 
