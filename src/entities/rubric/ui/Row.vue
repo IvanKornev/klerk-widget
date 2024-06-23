@@ -34,7 +34,7 @@
       </div>
     </div>
     <div
-      v-if="childrenAreVisible(rubric)"
+      v-if="rubric.children && rubric.children.length && openedRubricsIds.includes(rubric.id)"
       class="row__list_children"
     >
       <RubricRow
@@ -101,10 +101,6 @@ const handleRubric = (item: IRubric) => {
   if (props.checkedRubrics[item.id] >= 0) actionName = 'rubric-removing';
   emit('checked-rubrics-change', item, actionName);
 };
-
-const childrenAreVisible = (rubric: IRubric) => (
-  rubric.children && rubric.children.length > 0 && props.openedRubricsIds.includes(rubric.id)
-);
 
 const hasChildren = ({ children }: IRubric) => children && children.length > 0;
 </script>
