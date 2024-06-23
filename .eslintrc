@@ -55,6 +55,7 @@
        "skipStrings": true,
         "skipTemplates": true
       }
-    ]
+    ],
+    "no-undef": "off"
   }
 }
