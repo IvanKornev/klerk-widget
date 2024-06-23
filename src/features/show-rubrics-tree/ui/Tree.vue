@@ -66,16 +66,6 @@
 import { RubricRow } from '@/entities/rubric';
 import { useVisibilityToggle } from '@/features/show-rubrics-tree/model';
 
-interface IRubric {
-  id: number,
-  title: string,
-  url: string,
-  count: number,
-  children?: IRubric[],
-}
-
-type TRubricAction = 'rubric-adding' | 'rubric-removing';
-
 interface IProps {
   list?: IRubric[],
   checkedRubrics?: Record<number, number>,

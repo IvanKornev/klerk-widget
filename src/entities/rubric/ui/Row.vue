@@ -59,16 +59,6 @@
 import { RubricRow } from '@/entities/rubric';
 import { useRowCell } from '@/entities/rubric/model';
 
-interface IRubric {
-  id: number,
-  title: string,
-  url: string,
-  count: number,
-  children?: IRubric[],
-}
-
-type TRubricAction = 'rubric-adding' | 'rubric-removing';
-
 interface IProps {
   openedRubricsIds?: number[],
   checkedRubrics?: Record<number, number>,
