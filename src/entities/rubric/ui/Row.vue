@@ -88,7 +88,11 @@ const props = withDefaults(defineProps<IProps>(), {
   active: false,
 });
 
-const emit = defineEmits(['checked-rubrics-change', 'arrow-click', 'checkbox-click']);
+const emit = defineEmits<{
+  'checked-rubrics-change': [item: IRubric, action: TRubricAction],
+  'checkbox-click': [item: IRubric],
+  'arrow-click': [item: IRubric],
+}>();
 
 const { cellText } = useRowCell(props);
 
