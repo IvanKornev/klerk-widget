@@ -56,11 +56,10 @@
 </template>
 
 <script lang="ts" setup>
-import { RUBRIC_ACTIONS } from '@/shared/constants';
-import { RubricRow } from '@/entities/rubric';
 import { useRowCell } from '@/entities/rubric/model';
-
-type TRubricAction = typeof RUBRIC_ACTIONS[keyof typeof RUBRIC_ACTIONS];
+import { useRubricHandler } from '@/shared/model';
+import { TRubricAction } from '@/shared/constants';
+import { RubricRow } from '@/entities/rubric';
 
 interface IProps {
   openedRubricsIds: number[],
@@ -86,12 +85,7 @@ const emit = defineEmits<{
 }>();
 
 const { cellText } = useRowCell(props);
-
-const handleRubric = (item: IRubric) => {
-  let actionName: TRubricAction = RUBRIC_ACTIONS.ADDING;
-  if (props.checkedRubrics[item.id] >= 0) RUBRIC_ACTIONS.REMOVING;
-  emit('checked-rubrics-change', item, actionName);
-};
+const { handleRubric } = useRubricHandler(props, emit);
 
 const hasChildren = ({ children }: IRubric) => children && children.length > 0;
 </script>
