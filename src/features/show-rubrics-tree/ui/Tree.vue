@@ -89,7 +89,7 @@ const emit = defineEmits<{
 const { treeIsOpen, openedRubricsIds, toggleTreeVisibility, toggleRubricVisibility } = useVisibilityToggle(props);
 
 const handleRubric = (item: IRubric) => {
-  let actionName = RUBRIC_ACTIONS.ADDING;
+  let actionName: TRubricAction = RUBRIC_ACTIONS.ADDING;
   if (props.checkedRubrics[item.id] >= 0) actionName = RUBRIC_ACTIONS.REMOVING;
   emit('checked-rubrics-change', item, actionName);
 };

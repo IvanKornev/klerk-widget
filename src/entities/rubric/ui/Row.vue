@@ -88,7 +88,7 @@ const emit = defineEmits<{
 const { cellText } = useRowCell(props);
 
 const handleRubric = (item: IRubric) => {
-  let actionName = RUBRIC_ACTIONS.ADDING;
+  let actionName: TRubricAction = RUBRIC_ACTIONS.ADDING;
   if (props.checkedRubrics[item.id] >= 0) RUBRIC_ACTIONS.REMOVING;
   emit('checked-rubrics-change', item, actionName);
 };
