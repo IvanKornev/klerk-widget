@@ -47,8 +47,8 @@
         :with-count-sum="hasChildren(subrubric)"
         :is-open="openedRubricsIds.includes(subrubric.id)"
         :active="!!(checkedRubrics[subrubric.id] >= 0)"
-        @checked-rubrics-change="emitCheckedRubricsChanges"
-        @arrow-click="(item: IRubric) => emit('arrow-click', item)"
+        @checked-rubrics-change="(...args) => emit('checked-rubrics-change', ...args)"
+        @arrow-click="(item) => emit('arrow-click', item)"
         @checkbox-click="handleRubric(subrubric)"
       />
     </div>
@@ -102,17 +102,11 @@ const handleRubric = (item: IRubric) => {
   emit('checked-rubrics-change', item, actionName);
 };
 
-const emitCheckedRubricsChanges = (...args: [IRubric, TRubricAction]) => {
-  emit('checked-rubrics-change', ...args);
-};
-
 const childrenAreVisible = (rubric: IRubric) => (
   rubric.children && rubric.children.length > 0 && props.openedRubricsIds.includes(rubric.id)
 );
 
-const hasChildren = (subrubric: IRubric) => (
-  subrubric.children && subrubric.children.length > 0
-);
+const hasChildren = ({ children }: IRubric) => children && children.length > 0;
 </script>
 
 <style lang="scss" scoped>
