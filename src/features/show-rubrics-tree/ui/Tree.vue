@@ -53,7 +53,7 @@
             @checked-rubrics-change="(...args) => $emit('checked-rubrics-change', ...args)"
             :active="!!(checkedRubrics[rubric.id] >= 0)"
             :is-open="openedRubricsIds.includes(rubric.id)"
-            :with-arrow="rubric?.children?.length"
+            :with-arrow="!!rubric?.children?.length"
             with-count-sum
           />
         </div>
