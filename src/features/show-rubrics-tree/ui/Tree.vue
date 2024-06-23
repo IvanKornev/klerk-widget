@@ -1,11 +1,14 @@
 <template>
   <div
-    :class="{ 'tree_is-loading': isLoading, 'tree_is-open': treeIsOpen }"
     class="tree"
+    :class="{
+      'tree_is-loading': isLoading,
+      'tree_is-open': toggleState.treeIsOpen,
+    }"
   >
     <div
       class="tree__header"
-      @click="toggleTreeVisibility"
+      @click="toggleState.toggleTreeVisibility"
     >
       <h3 class="header__subtitle">
         РУБРИКИ
@@ -15,7 +18,7 @@
       </div>
     </div>
     <div
-      v-show="treeIsOpen"
+      v-show="toggleState.treeIsOpen"
       class="tree__list"
     >
       <div class="list__panel">
@@ -47,12 +50,12 @@
             class="item__row"
             :rubric="rubric"
             :checked-rubrics="checkedRubrics"
-            :opened-rubrics-ids="openedRubricsIds"
-            @arrow-click="toggleRubricVisibility"
+            :opened-rubrics-ids="toggleState.openedRubricsIds"
+            @arrow-click="toggleState.toggleRubricVisibility"
             @checkbox-click="handleRubric(rubric)"
             @checked-rubrics-change="(...args) => $emit('checked-rubrics-change', ...args)"
             :active="!!(checkedRubrics[rubric.id] >= 0)"
-            :is-open="openedRubricsIds.includes(rubric.id)"
+            :is-open="toggleState.openedRubricsIds.includes(rubric.id)"
             :with-arrow="!!rubric?.children?.length"
             with-count-sum
           />
@@ -63,6 +66,7 @@
 </template>
 
 <script lang="ts" setup>
+import { reactive } from 'vue';
 import { useRubricHandler } from '@/shared/model';
 import { TRubricAction } from '@/shared/constants';
 import { RubricRow } from '@/entities/rubric';
@@ -85,7 +89,7 @@ const emit = defineEmits<{
   'empty-rubrics-toggle': [],
 }>();
 
-const { treeIsOpen, openedRubricsIds, toggleTreeVisibility, toggleRubricVisibility } = useVisibilityToggle(props);
+const toggleState = reactive(useVisibilityToggle(props));
 const { handleRubric } = useRubricHandler(props, emit);
 </script>
 
