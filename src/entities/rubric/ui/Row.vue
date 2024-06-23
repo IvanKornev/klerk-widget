@@ -58,7 +58,6 @@
 <script lang="ts" setup>
 import { useRowCell } from '@/entities/rubric/model';
 import { useRubricHandler } from '@/shared/model';
-import { TRubricAction } from '@/shared/constants';
 import { RubricRow } from '@/entities/rubric';
 
 interface IProps {

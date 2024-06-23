@@ -1,4 +1,4 @@
-import { RUBRIC_ACTIONS, TRubricAction } from '@/shared/constants';
+import { RUBRIC_ACTIONS } from '@/shared/constants';
 
 interface IProps {
   checkedRubrics: TCheckedRubrics,

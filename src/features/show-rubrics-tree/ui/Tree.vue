@@ -68,7 +68,6 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import { useRubricHandler } from '@/shared/model';
-import { TRubricAction } from '@/shared/constants';
 import { RubricRow } from '@/entities/rubric';
 import { useVisibilityToggle } from '@/features/show-rubrics-tree/model';
 

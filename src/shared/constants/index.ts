@@ -1,6 +1,4 @@
-export const RUBRIC_ACTIONS = {
+export const RUBRIC_ACTIONS: Record<string, TRubricAction> = {
   ADDING: 'rubric-adding',
   REMOVING: 'rubric-removing',
 } as const;
-
-export type TRubricAction = typeof RUBRIC_ACTIONS[keyof typeof RUBRIC_ACTIONS];

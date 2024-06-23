@@ -1,8 +1,6 @@
 import { ref } from 'vue';
 import { RUBRIC_ACTIONS } from '@/shared/constants';
 
-type TRubricAction = typeof RUBRIC_ACTIONS[keyof typeof RUBRIC_ACTIONS];
-
 const useRubricsCheckboxes = () => {
   const checkedRubrics = ref<TCheckedRubrics>({});
 
