@@ -1,5 +1,5 @@
 <template>
-  <Fragment>
+  <div>
     <div
       class="row"
       :class="{ 'row_is-open': isOpen }"
@@ -52,7 +52,7 @@
         @checkbox-click="handleRubric(subrubric)"
       />
     </div>
-  </Fragment>
+  </div>
 </template>
 
 <script lang="ts" setup>
