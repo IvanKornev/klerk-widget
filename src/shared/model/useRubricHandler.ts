@@ -4,7 +4,9 @@ interface IProps {
   checkedRubrics: TCheckedRubrics,
 }
 
-const useRubricHandler = (props: IProps, emit: any) => {
+type TEmit = (e: 'checked-rubrics-change', item: IRubric, actionName: TRubricAction) => void;
+
+const useRubricHandler = (props: IProps, emit: TEmit) => {
   const { ADDING, REMOVING } = RUBRIC_ACTIONS;
 
   const handleRubric = (item: IRubric) => {
