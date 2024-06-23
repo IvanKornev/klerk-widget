@@ -1,5 +1,3 @@
 import rubrics from './rubrics';
 
-export {
-  rubrics,
-};
+export { rubrics };

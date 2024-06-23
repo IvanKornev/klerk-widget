@@ -1,5 +1,5 @@
 import { computed } from 'vue';
-import recursion from '@/entities/rubric/lib/recursion';
+import { sumCountFields } from '@/entities/rubric/lib/recursion';
 
 interface IProps {
   rubric: IRubric,
@@ -7,8 +7,6 @@ interface IProps {
 }
 
 const useRowCell = (props: IProps) => {
-  const { sumCountFields } = recursion;
-
   const countSum = computed(() => {
     const children = props.rubric.children ?? [];
     const subrubricsSum = children.reduce(sumCountFields, 0);
