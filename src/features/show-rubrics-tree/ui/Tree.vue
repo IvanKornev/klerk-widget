@@ -67,15 +67,13 @@ import { RubricRow } from '@/entities/rubric';
 import { useVisibilityToggle } from '@/features/show-rubrics-tree/model';
 
 interface IProps {
-  list?: IRubric[],
-  checkedRubrics?: Record<number, number>,
+  list: IRubric[],
+  checkedRubrics: Record<number, number>,
   isLoading?: boolean,
   withEmptyRubrics?: boolean,
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  list: () => [],
-  checkedRubrics: () => ({}),
   isLoading: false,
   withEmptyRubrics: false,
 });

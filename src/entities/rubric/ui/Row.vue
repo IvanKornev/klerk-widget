@@ -60,8 +60,8 @@ import { RubricRow } from '@/entities/rubric';
 import { useRowCell } from '@/entities/rubric/model';
 
 interface IProps {
-  openedRubricsIds?: number[],
-  checkedRubrics?: Record<number, number>,
+  openedRubricsIds: number[],
+  checkedRubrics: Record<number, number>,
   isOpen?: boolean,
   withArrow?: boolean,
   withCountSum?: boolean,
@@ -70,8 +70,6 @@ interface IProps {
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  openedRubricsIds: () => [],
-  checkedRubrics: () => ({}),
   isOpen: false,
   withArrow: false,
   withCountSum: false,
