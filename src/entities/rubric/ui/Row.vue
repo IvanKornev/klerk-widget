@@ -8,7 +8,7 @@
         <VCheckbox
           :model-value="active"
           class="mt-2"
-          density="compacy"
+          :density="null"
           hide-details
           @click="$emit('checkbox-click', rubric)"
         >

@@ -19,7 +19,7 @@
         <VCheckbox
           label="Отображать пустые рубрики"
           class="mt-2"
-          density="compacy"
+          :density="null"
           :model-value="withEmptyRubrics"
           @click="$emit('empty-rubrics-toggle')"
           hide-details
