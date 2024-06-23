@@ -47,8 +47,8 @@
         :with-count-sum="hasChildren(subrubric)"
         :is-open="openedRubricsIds.includes(subrubric.id)"
         :active="!!(checkedRubrics[subrubric.id] >= 0)"
-        @checked-rubrics-change="(...args) => emit('checked-rubrics-change', ...args)"
-        @arrow-click="(item) => emit('arrow-click', item)"
+        @checked-rubrics-change="(...args) => $emit('checked-rubrics-change', ...args)"
+        @arrow-click="(item) => $emit('arrow-click', item)"
         @checkbox-click="handleRubric(subrubric)"
       />
     </div>

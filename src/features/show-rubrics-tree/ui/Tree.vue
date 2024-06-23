@@ -1,5 +1,8 @@
 <template>
-  <div :class="rootCss">
+  <div
+    :class="{ 'tree_is-loading': isLoading, 'tree_is-open': treeIsOpen }"
+    class="tree"
+  >
     <div
       class="tree__header"
       @click="toggleTreeVisibility"
@@ -47,10 +50,10 @@
             :opened-rubrics-ids="openedRubricsIds"
             @arrow-click="toggleRubricVisibility"
             @checkbox-click="handleRubric(rubric)"
-            @checked-rubrics-change="emitCheckedRubricsChanges"
+            @checked-rubrics-change="(...args) => $emit('checked-rubrics-change', ...args)"
             :active="!!(checkedRubrics[rubric.id] >= 0)"
             :is-open="openedRubricsIds.includes(rubric.id)"
-            :with-arrow="rubric?.children?.length > 0"
+            :with-arrow="rubric?.children?.length"
             with-count-sum
           />
         </div>
@@ -59,55 +62,44 @@
   </div>
 </template>
 
-<script>
-import { useRubricHandler } from '@/shared/model';
+<script lang="ts" setup>
 import { useVisibilityToggle } from '@/features/show-rubrics-tree/model';
-import { RubricRow } from '@/entities/rubric';
-export default {
-  emits: ['empty-rubrics-toggle', 'checked-rubrics-change'],
-  components: {
-    RubricRow,
-  },
-  mixins: [useRubricHandler],
-  props: {
-    list: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
-    checkedRubrics: {
-      type: Object,
-      default() {
-        return {};
-      },
-    },
-    isLoading: {
-      type: Boolean,
-      default: true,
-    },
-    withEmptyRubrics: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  setup(props) {
-    const { treeIsOpen, openedRubricsIds, toggleTreeVisibility, toggleRubricVisibility } = useVisibilityToggle(props);
-    return { treeIsOpen, openedRubricsIds, toggleTreeVisibility, toggleRubricVisibility };
-  },
-  computed: {
-    rootCss() {
-      return ['tree', {
-        'tree_is-loading': this.isLoading,
-        'tree_is-open': this.treeIsOpen,
-      }];
-    },
-  },
-  methods: {
-    emitCheckedRubricsChanges(...args) {
-      this.$emit('checked-rubrics-change', ...args);
-    },
-  },
+
+interface IRubric {
+  id: number,
+  title: string,
+  url: string,
+  count: number,
+  children?: IRubric[],
+}
+
+type TRubricAction = 'rubric-adding' | 'rubric-removing';
+
+interface IProps {
+  list?: IRubric[],
+  checkedRubrics?: Record<number, number>,
+  isLoading?: boolean,
+  withEmptyRubrics?: boolean,
+}
+
+const props = withDefaults(defineProps<IProps>(), {
+  list: () => [],
+  checkedRubrics: () => ({}),
+  isLoading: false,
+  withEmptyRubrics: false,
+});
+
+const emit = defineEmits<{
+  'checked-rubrics-change': [item: IRubric, action: TRubricAction],
+  'empty-rubrics-toggle': [],
+}>();
+
+const { treeIsOpen, openedRubricsIds, toggleTreeVisibility, toggleRubricVisibility } = useVisibilityToggle(props);
+
+const handleRubric = (item: IRubric) => {
+  let actionName: TRubricAction = 'rubric-adding';
+  if (props.checkedRubrics[item.id] >= 0) actionName = 'rubric-removing';
+  emit('checked-rubrics-change', item, actionName);
 };
 </script>
 
