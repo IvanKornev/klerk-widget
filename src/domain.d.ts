@@ -7,3 +7,5 @@ interface IRubric {
 }
 
 type TRubricAction = 'rubric-adding' | 'rubric-removing';
+
+type TCheckedRubrics = Record<number, number>;

@@ -61,7 +61,7 @@ import { useRowCell } from '@/entities/rubric/model';
 
 interface IProps {
   openedRubricsIds: number[],
-  checkedRubrics: Record<number, number>,
+  checkedRubrics: TCheckedRubrics,
   isOpen?: boolean,
   withArrow?: boolean,
   withCountSum?: boolean,

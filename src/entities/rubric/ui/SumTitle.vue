@@ -7,9 +7,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 
-const props = defineProps<{
-  checkedRubrics: Record<number, number>,
-}>();
+const props = defineProps<{ checkedRubrics: TCheckedRubrics }>();
 
 const allCountsSum = computed(() => {
   const onlyCounts = Object.values(props.checkedRubrics);

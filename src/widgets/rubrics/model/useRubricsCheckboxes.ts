@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 
 const useRubricsCheckboxes = () => {
-  const checkedRubrics = ref<Record<number, number>>({});
+  const checkedRubrics = ref<TCheckedRubrics>({});
 
   const changeCheckedRubrics = (item: IRubric, actionName: TRubricAction) => {
     const POSSIBLE_ACTIONS = {

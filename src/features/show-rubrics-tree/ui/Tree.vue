@@ -68,7 +68,7 @@ import { useVisibilityToggle } from '@/features/show-rubrics-tree/model';
 
 interface IProps {
   list: IRubric[],
-  checkedRubrics: Record<number, number>,
+  checkedRubrics: TCheckedRubrics,
   isLoading?: boolean,
   withEmptyRubrics?: boolean,
 }
